@@ -1,0 +1,33 @@
+# Windows metafiles
+Thumbs.db
+
+# Mac metafiles
+._*
+.DS_Store
+
+# Python bytecode
+*.pyc
+
+# PyInstaller build output
+build
+dist
+
+# Test output
+PythonUtils/image.png
+
+# Cascade training datasets
+AngoraBlue/cascade_training/CAT_DATASET_01
+AngoraBlue/cascade_training/CAT_DATASET_02
+AngoraBlue/cascade_training/faces
+AngoraBlue/cascade_training/urtho_negatives
+AngoraBlue/cascade_training/VOC2007
+
+# Cascade training intermediate output
+AngoraBlue/cascade_training/binary_description
+AngoraBlue/cascade_training/haarcascade_frontalcatface
+AngoraBlue/cascade_training/haarcascade_frontalcatface_extended
+AngoraBlue/cascade_training/lbpcascade_frontalcatface
+
+# Application output
+AngoraBlue/recognizers
+LivingHeadlights/config.dat
