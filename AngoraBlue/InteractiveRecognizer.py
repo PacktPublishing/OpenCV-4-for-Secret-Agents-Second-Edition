@@ -21,13 +21,17 @@ class InteractiveRecognizer(wx.Frame):
                  title='Interactive Recognizer'):
 
         self.mirrored = True
-        
+
         self._running = True
-        
+
         self._capture = cv2.VideoCapture(cameraDeviceID)
         size = ResizeUtils.cvResizeCapture(
                 self._capture, imageSize)
         self._imageWidth, self._imageHeight = size
+
+        self._image = None
+        self._grayImage = None
+        self._equalizedGrayImage = None
 
         self._currDetectedObject = None
 
@@ -38,7 +42,7 @@ class InteractiveRecognizer(wx.Frame):
             self._recognizerTrained = True
         else:
             self._recognizerTrained = False
-        
+
         self._detector = cv2.CascadeClassifier(cascadePath)
         self._scaleFactor = scaleFactor
         self._minNeighbors = minNeighbors
@@ -47,15 +51,15 @@ class InteractiveRecognizer(wx.Frame):
                          int(minImageSize * minSizeProportional[1]))
         self._flags = flags
         self._rectColor = rectColor
-        
+
         style = wx.CLOSE_BOX | wx.MINIMIZE_BOX | wx.CAPTION | \
             wx.SYSTEM_MENU | wx.CLIP_CHILDREN
         wx.Frame.__init__(self, None, title=title,
                           style=style, size=size)
         self.SetBackgroundColour(wx.Colour(232, 232, 232))
-        
+
         self.Bind(wx.EVT_CLOSE, self._onCloseWindow)
-        
+
         quitCommandID = wx.NewId()
         self.Bind(wx.EVT_MENU, self._onQuitCommand,
                   id=quitCommandID)
@@ -63,16 +67,20 @@ class InteractiveRecognizer(wx.Frame):
             (wx.ACCEL_NORMAL, wx.WXK_ESCAPE, quitCommandID)
         ])
         self.SetAcceleratorTable(acceleratorTable)
-        
-        self._staticBitmap = wx.StaticBitmap(self, size=size)
-        self._showImage(None)
-        
+
+        self._videoPanel = wx.Panel(self, size=size)
+        self._videoPanel.Bind(
+                wx.EVT_ERASE_BACKGROUND,
+                self._onVideoPanelEraseBackground)
+        self._videoPanel.Bind(
+                wx.EVT_PAINT, self._onVideoPanelPaint)
+
         self._referenceTextCtrl = wx.TextCtrl(
                 self, style=wx.TE_PROCESS_ENTER)
         self._referenceTextCtrl.SetMaxLength(4)
         self._referenceTextCtrl.Bind(
                 wx.EVT_KEY_UP, self._onReferenceTextCtrlKeyUp)
-        
+
         self._predictionStaticText = wx.StaticText(self)
         # Insert an endline for consistent spacing.
         self._predictionStaticText.SetLabel('\n')
@@ -82,7 +90,7 @@ class InteractiveRecognizer(wx.Frame):
         self._updateModelButton.Bind(
                 wx.EVT_BUTTON, self._updateModel)
         self._updateModelButton.Disable()
-        
+
         self._clearModelButton = wx.Button(
                 self, label='Clear Model')
         self._clearModelButton.Bind(
@@ -104,16 +112,16 @@ class InteractiveRecognizer(wx.Frame):
         controlsSizer.Add((0, 0), 1) # Spacer
         controlsSizer.Add(self._clearModelButton, 0,
                           wx.ALIGN_CENTER_VERTICAL)
-        
+
         rootSizer = wx.BoxSizer(wx.VERTICAL)
-        rootSizer.Add(self._staticBitmap)
+        rootSizer.Add(self._videoPanel)
         rootSizer.Add(controlsSizer, 0, wx.EXPAND | wx.ALL, border)
         self.SetSizerAndFit(rootSizer)
-        
+
         self._captureThread = threading.Thread(
                 target=self._runCaptureLoop)
         self._captureThread.start()
-    
+
     def _onCloseWindow(self, event):
         self._running = False
         self._captureThread.join()
@@ -123,9 +131,24 @@ class InteractiveRecognizer(wx.Frame):
                 os.makedirs(modelDir)
             self._recognizer.save(self._recognizerPath)
         self.Destroy()
-    
+
     def _onQuitCommand(self, event):
         self.Close()
+
+    def _onVideoPanelEraseBackground(self, event):
+        pass
+
+    def _onVideoPanelPaint(self, event):
+
+        if self._image is None:
+            return
+
+        # Convert the image to bitmap format.
+        bitmap = WxUtils.wxBitmapFromCvImage(self._image)
+
+        # Show the bitmap.
+        dc = wx.BufferedPaintDC(self._videoPanel)
+        dc.DrawBitmap(bitmap, 0, 0)
 
     def _onReferenceTextCtrlKeyUp(self, event):
         self._enableOrDisableUpdateModelButton()
@@ -141,37 +164,42 @@ class InteractiveRecognizer(wx.Frame):
             self._recognizer.train(src, labels)
             self._recognizerTrained = True
             self._clearModelButton.Enable()
-    
+
     def _clearModel(self, event=None):
         self._recognizerTrained = False
         self._clearModelButton.Disable()
         if os.path.isfile(self._recognizerPath):
             os.remove(self._recognizerPath)
         self._recognizer = cv2.createLBPHFaceRecognizer()
-        
+
     def _runCaptureLoop(self):
         while self._running:
-            success, image = self._capture.read()
-            if image is not None:
-                self._detectAndRecognize(image)
+            success, self._image = self._capture.read(
+                    self._image)
+            if self._image is not None:
+                self._detectAndRecognize()
                 if (self.mirrored):
-                    image[:] = numpy.fliplr(image)
-            wx.CallAfter(self._showImage, image)
-    
-    def _detectAndRecognize(self, image):
-        grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        equalizedGrayImage = cv2.equalizeHist(grayImage)
+                    self._image[:] = numpy.fliplr(self._image)
+                self._videoPanel.Refresh()
+
+    def _detectAndRecognize(self):
+        self._grayImage = cv2.cvtColor(
+                self._image, cv2.COLOR_BGR2GRAY,
+                self._grayImage)
+        self._equalizedGrayImage = cv2.equalizeHist(
+                self._grayImage, self._equalizedGrayImage)
         rects = self._detector.detectMultiScale(
-                equalizedGrayImage, scaleFactor=self._scaleFactor,
+                self._equalizedGrayImage,
+                scaleFactor=self._scaleFactor,
                 minNeighbors=self._minNeighbors,
                 minSize=self._minSize, flags=self._flags)
         for x, y, w, h in rects:
-            cv2.rectangle(image, (x, y), (x+w, y+h),
+            cv2.rectangle(self._image, (x, y), (x+w, y+h),
                           self._rectColor, 1)
         if len(rects) > 0:
             x, y, w, h = rects[0]
             self._currDetectedObject = cv2.equalizeHist(
-                    grayImage[y:y+h, x:x+w])
+                    self._grayImage[y:y+h, x:x+w])
             if self._recognizerTrained:
                 try:
                     labelAsInt, distance = self._recognizer.predict(
@@ -203,17 +231,6 @@ class InteractiveRecognizer(wx.Frame):
             self._updateModelButton.Disable()
         else:
             self._updateModelButton.Enable()
-
-    def _showImage(self, image):
-        if image is None:
-            # Provide a black bitmap.
-            bitmap = wx.EmptyBitmap(self._imageWidth,
-                                    self._imageHeight)
-        else:
-            # Convert the image to bitmap format.
-            bitmap = WxUtils.wxBitmapFromCvImage(image)
-        # Show the bitmap.
-        self._staticBitmap.SetBitmap(bitmap)
 
     def _showInstructions(self):
         self._showMessage(

@@ -60,9 +60,11 @@ class LivingHeadlights(wx.Frame):
         self._capture = cv2.VideoCapture(cameraDeviceID)
         size = ResizeUtils.cvResizeCapture(
                 self._capture, imageSize)
-        print size
         w, h = size
         self._imageWidth, self._imageHeight = w, h
+
+        self._image = None
+        self._grayImage = None
 
         minDistBetweenBlobs = \
                 min(w, h) * \
@@ -118,9 +120,12 @@ class LivingHeadlights(wx.Frame):
         ])
         self.SetAcceleratorTable(acceleratorTable)
 
-        self._staticBitmap = wx.StaticBitmap(self,
-                                             size=size)
-        self._showImage(None)
+        self._videoPanel = wx.Panel(self, size=size)
+        self._videoPanel.Bind(
+                wx.EVT_ERASE_BACKGROUND,
+                self._onVideoPanelEraseBackground)
+        self._videoPanel.Bind(
+                wx.EVT_PAINT, self._onVideoPanelPaint)
 
         self._calibrationTextCtrl = wx.TextCtrl(
                 self, style=wx.TE_PROCESS_ENTER)
@@ -172,7 +177,7 @@ class LivingHeadlights(wx.Frame):
                           wx.ALIGN_CENTER_VERTICAL)
 
         rootSizer = wx.BoxSizer(wx.VERTICAL)
-        rootSizer.Add(self._staticBitmap)
+        rootSizer.Add(self._videoPanel)
         rootSizer.Add(controlsSizer, 0,
                       wx.EXPAND | wx.ALL, border)
         self.SetSizerAndFit(rootSizer)
@@ -197,6 +202,21 @@ class LivingHeadlights(wx.Frame):
     def _onQuitCommand(self, event):
         self.Close()
 
+    def _onVideoPanelEraseBackground(self, event):
+        pass
+
+    def _onVideoPanelPaint(self, event):
+
+        if self._image is None:
+            return
+
+        # Convert the image to bitmap format.
+        bitmap = WxUtils.wxBitmapFromCvImage(self._image)
+
+        # Show the bitmap.
+        dc = wx.BufferedPaintDC(self._videoPanel)
+        dc.DrawBitmap(bitmap, 0, 0)
+
     def _onSelectMeters(self, event):
         self._convertMetersToFeet = False
 
@@ -217,18 +237,20 @@ class LivingHeadlights(wx.Frame):
 
     def _runCaptureLoop(self):
         while self._running:
-            success, image = self._capture.read()
-            if image is not None:
-                self._detectAndEstimateDistance(image)
+            success, self._image = self._capture.read(
+                    self._image)
+            if self._image is not None:
+                self._detectAndEstimateDistance()
                 if (self.mirrored):
-                    image[:] = numpy.fliplr(image)
-            wx.CallAfter(self._showImage, image)
+                    self._image[:] = numpy.fliplr(self._image)
+                self._videoPanel.Refresh()
 
-    def _detectAndEstimateDistance(self, image):
+    def _detectAndEstimateDistance(self):
 
-        grayImage = cv2.cvtColor(
-                image, cv2.COLOR_BGR2GRAY)
-        blobs = self._detector.detect(grayImage)
+        self._grayImage = cv2.cvtColor(
+                self._image, cv2.COLOR_BGR2GRAY,
+                self._grayImage)
+        blobs = self._detector.detect(self._grayImage)
         blobsForColors = {}
 
         for blob in blobs:
@@ -244,7 +266,7 @@ class LivingHeadlights(wx.Frame):
             maxY = min(self._imageHeight,
                        centerYAsInt + radiusAsInt)
 
-            region = image[minY:maxY, minX:maxX]
+            region = self._image[minY:maxY, minX:maxX]
 
             # Get the region's dimensions, which may
             # differ from the blob's diameter if the blob
@@ -278,11 +300,10 @@ class LivingHeadlights(wx.Frame):
             else:
                 blobsForColors[color] = [blob]
 
-        self._processBlobsForColors(image, blobsForColors)
+        self._processBlobsForColors(blobsForColors)
         self._enableOrDisableCalibrationButton()
 
-    def _processBlobsForColors(self, image,
-                               blobsForColors):
+    def _processBlobsForColors(self, blobsForColors):
 
         self._pixelDistBetweenLights = None
 
@@ -299,11 +320,11 @@ class LivingHeadlights(wx.Frame):
                 radiusAsInt = int(blob.size)
 
                 # Fill the circle with the selected color.
-                cv2.circle(image, centerAsInts,
+                cv2.circle(self._image, centerAsInts,
                            radiusAsInt, colorBGR,
                            cv2.cv.CV_FILLED, cv2.CV_AA)
                 # Outline the circle in black.
-                cv2.circle(image, centerAsInts,
+                cv2.circle(self._image, centerAsInts,
                            radiusAsInt, (0, 0, 0), 1,
                            cv2.CV_AA)
 
@@ -322,7 +343,7 @@ class LivingHeadlights(wx.Frame):
 
                     # Connect the current and previous
                     # circle with a black line.
-                    cv2.line(image, prevCenterAsInts,
+                    cv2.line(self._image, prevCenterAsInts,
                              centerAsInts, (0, 0, 0), 1,
                              cv2.CV_AA)
 
@@ -340,17 +361,6 @@ class LivingHeadlights(wx.Frame):
                 self._calibrationButton.Enable()
             except:
                 self._calibrationButton.Disable()
-
-    def _showImage(self, image):
-        if image is None:
-            # Provide a black bitmap.
-            bitmap = wx.EmptyBitmap(self._imageWidth,
-                                    self._imageHeight)
-        else:
-            # Convert the image to bitmap format.
-            bitmap = WxUtils.wxBitmapFromCvImage(image)
-        # Show the bitmap.
-        self._staticBitmap.SetBitmap(bitmap)
 
     def _showInstructions(self):
         self._showMessage(

@@ -39,6 +39,8 @@ class LazyEyes(wx.Frame):
         self._imageWidth = w
         self._imageHeight = h
 
+        self._image = None
+
         self._useGrayOverlay = useGrayOverlay
         if useGrayOverlay:
             historyShape = (maxHistoryLength,
@@ -84,12 +86,15 @@ class LazyEyes(wx.Frame):
         ])
         self.SetAcceleratorTable(acceleratorTable)
 
-        self._staticBitmap = wx.StaticBitmap(self,
-                                             size=size)
-        self._showImage(None)
+        self._videoPanel = wx.Panel(self, size=size)
+        self._videoPanel.Bind(
+                wx.EVT_ERASE_BACKGROUND,
+                self._onVideoPanelEraseBackground)
+        self._videoPanel.Bind(
+                wx.EVT_PAINT, self._onVideoPanelPaint)
 
         rootSizer = wx.BoxSizer(wx.VERTICAL)
-        rootSizer.Add(self._staticBitmap)
+        rootSizer.Add(self._videoPanel)
         self.SetSizerAndFit(rootSizer)
 
         self._captureThread = threading.Thread(
@@ -105,20 +110,35 @@ class LazyEyes(wx.Frame):
     def _onQuitCommand(self, event):
         self.Close()
 
+    def _onVideoPanelEraseBackground(self, event):
+        pass
+
+    def _onVideoPanelPaint(self, event):
+
+        if self._image is None:
+            return
+
+        # Convert the image to bitmap format.
+        bitmap = WxUtils.wxBitmapFromCvImage(self._image)
+
+        # Show the bitmap.
+        dc = wx.BufferedPaintDC(self._videoPanel)
+        dc.DrawBitmap(bitmap, 0, 0)
+
     def _runCaptureLoop(self):
         while self._running:
-            success, image = self._capture.read()
-            if image is not None:
-                self._applyEulerianVideoMagnification(
-                        image)
+            success, self._image = self._capture.read(
+                    self._image)
+            if self._image is not None:
+                self._applyEulerianVideoMagnification()
                 if (self.mirrored):
-                    image[:] = numpy.fliplr(image)
-            wx.CallAfter(self._showImage, image)
+                    self._image[:] = numpy.fliplr(self._image)
+                self._videoPanel.Refresh()
 
-    def _applyEulerianVideoMagnification(self, image):
+    def _applyEulerianVideoMagnification(self):
 
         if (self._imageHeight, self._imageWidth) != \
-               image.shape[:2]:
+               self._image.shape[:2]:
             # The image is an expected size.
             # Sometimes this happens at the start of capture.
             # Skip the image and continue.
@@ -128,10 +148,10 @@ class LazyEyes(wx.Frame):
 
         if self._useGrayOverlay:
             smallImage = cv2.cvtColor(
-                    image, cv2.COLOR_BGR2GRAY).astype(
+                    self._image, cv2.COLOR_BGR2GRAY).astype(
                             numpy.float32)
         else:
-            smallImage = image.astype(numpy.float32)
+            smallImage = self._image.astype(numpy.float32)
 
         # Downsample the image using a pyramid technique.
         i = 0
@@ -203,18 +223,7 @@ class LazyEyes(wx.Frame):
         if self._useGrayOverlay:
             overlay = cv2.cvtColor(overlay,
                                    cv2.COLOR_GRAY2BGR)
-        cv2.convertScaleAbs(image + overlay, image)
-
-    def _showImage(self, image):
-        if image is None:
-            # Provide a black bitmap.
-            bitmap = wx.EmptyBitmap(self._imageWidth,
-                                    self._imageHeight)
-        else:
-            # Convert the image to bitmap format.
-            bitmap = WxUtils.wxBitmapFromCvImage(image)
-        # Show the bitmap.
-        self._staticBitmap.SetBitmap(bitmap)
+        cv2.convertScaleAbs(self._image + overlay, self._image)
 
 
 def main():
