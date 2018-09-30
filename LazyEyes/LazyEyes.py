@@ -93,6 +93,8 @@ class LazyEyes(wx.Frame):
         self._videoPanel.Bind(
                 wx.EVT_PAINT, self._onVideoPanelPaint)
 
+        self._videoBitmap = None
+
         rootSizer = wx.BoxSizer(wx.VERTICAL)
         rootSizer.Add(self._videoPanel)
         self.SetSizerAndFit(rootSizer)
@@ -115,15 +117,12 @@ class LazyEyes(wx.Frame):
 
     def _onVideoPanelPaint(self, event):
 
-        if self._image is None:
+        if self._videoBitmap is None:
             return
-
-        # Convert the image to bitmap format.
-        bitmap = WxUtils.wxBitmapFromCvImage(self._image)
 
         # Show the bitmap.
         dc = wx.BufferedPaintDC(self._videoPanel)
-        dc.DrawBitmap(bitmap, 0, 0)
+        dc.DrawBitmap(self._videoBitmap, 0, 0)
 
     def _runCaptureLoop(self):
         while self._running:
@@ -133,13 +132,19 @@ class LazyEyes(wx.Frame):
                 self._applyEulerianVideoMagnification()
                 if (self.mirrored):
                     self._image[:] = numpy.fliplr(self._image)
+
+                # Convert the image to bitmap format.
+                self._videoBitmap = \
+                        WxUtils.wxBitmapFromCvImage(
+                                self._image)
+
                 self._videoPanel.Refresh()
 
     def _applyEulerianVideoMagnification(self):
 
         if (self._imageHeight, self._imageWidth) != \
                self._image.shape[:2]:
-            # The image is an expected size.
+            # The image is an unexpected size.
             # Sometimes this happens at the start of capture.
             # Skip the image and continue.
             return

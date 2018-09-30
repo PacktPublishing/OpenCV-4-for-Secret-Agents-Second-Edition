@@ -127,6 +127,8 @@ class LivingHeadlights(wx.Frame):
         self._videoPanel.Bind(
                 wx.EVT_PAINT, self._onVideoPanelPaint)
 
+        self._videoBitmap = None
+
         self._calibrationTextCtrl = wx.TextCtrl(
                 self, style=wx.TE_PROCESS_ENTER)
         self._calibrationTextCtrl.Bind(
@@ -207,15 +209,12 @@ class LivingHeadlights(wx.Frame):
 
     def _onVideoPanelPaint(self, event):
 
-        if self._image is None:
+        if self._videoBitmap is None:
             return
-
-        # Convert the image to bitmap format.
-        bitmap = WxUtils.wxBitmapFromCvImage(self._image)
 
         # Show the bitmap.
         dc = wx.BufferedPaintDC(self._videoPanel)
-        dc.DrawBitmap(bitmap, 0, 0)
+        dc.DrawBitmap(self._videoBitmap, 0, 0)
 
     def _onSelectMeters(self, event):
         self._convertMetersToFeet = False
@@ -243,6 +242,12 @@ class LivingHeadlights(wx.Frame):
                 self._detectAndEstimateDistance()
                 if (self.mirrored):
                     self._image[:] = numpy.fliplr(self._image)
+
+                # Convert the image to bitmap format.
+                self._videoBitmap = \
+                        WxUtils.wxBitmapFromCvImage(
+                                self._image)
+
                 self._videoPanel.Refresh()
 
     def _detectAndEstimateDistance(self):

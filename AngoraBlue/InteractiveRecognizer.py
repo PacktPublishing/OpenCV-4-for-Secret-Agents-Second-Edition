@@ -75,6 +75,8 @@ class InteractiveRecognizer(wx.Frame):
         self._videoPanel.Bind(
                 wx.EVT_PAINT, self._onVideoPanelPaint)
 
+        self._videoBitmap = None
+
         self._referenceTextCtrl = wx.TextCtrl(
                 self, style=wx.TE_PROCESS_ENTER)
         self._referenceTextCtrl.SetMaxLength(4)
@@ -140,15 +142,12 @@ class InteractiveRecognizer(wx.Frame):
 
     def _onVideoPanelPaint(self, event):
 
-        if self._image is None:
+        if self._videoBitmap is None:
             return
-
-        # Convert the image to bitmap format.
-        bitmap = WxUtils.wxBitmapFromCvImage(self._image)
 
         # Show the bitmap.
         dc = wx.BufferedPaintDC(self._videoPanel)
-        dc.DrawBitmap(bitmap, 0, 0)
+        dc.DrawBitmap(self._videoBitmap, 0, 0)
 
     def _onReferenceTextCtrlKeyUp(self, event):
         self._enableOrDisableUpdateModelButton()
@@ -180,6 +179,12 @@ class InteractiveRecognizer(wx.Frame):
                 self._detectAndRecognize()
                 if (self.mirrored):
                     self._image[:] = numpy.fliplr(self._image)
+
+                # Convert the image to bitmap format.
+                self._videoBitmap = \
+                        WxUtils.wxBitmapFromCvImage(
+                                self._image)
+
                 self._videoPanel.Refresh()
 
     def _detectAndRecognize(self):
