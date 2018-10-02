@@ -24,11 +24,18 @@ def cvResizeAspectFill(src, maxSize,
     return dst
 
 def cvResizeCapture(capture, preferredSize):
+
     # Try to set the requested dimensions.
     w, h = preferredSize
     capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, w)
     capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, h)
-    # Try to return the actual dimensions.
+
+    # Sometimes the dimensions fluctuate at the start of capture.
+    # Discard two frames to allow for this.
+    capture.read()
+    capture.read()
+
+    # Try to return the actual dimensions of the third frame.
     success, image = capture.read()
     if success and image is not None:
         h, w = image.shape[:2]

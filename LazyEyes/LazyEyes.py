@@ -95,8 +95,17 @@ class LazyEyes(wx.Frame):
 
         self._videoBitmap = None
 
+        self._fpsStaticText = wx.StaticText(self)
+
+        border = 12
+
+        controlsSizer = wx.BoxSizer(wx.HORIZONTAL)
+        controlsSizer.Add(self._fpsStaticText, 0,
+                          wx.ALIGN_CENTER_VERTICAL)
+
         rootSizer = wx.BoxSizer(wx.VERTICAL)
         rootSizer.Add(self._videoPanel)
+        rootSizer.Add(controlsSizer, 0, wx.EXPAND | wx.ALL, border)
         self.SetSizerAndFit(rootSizer)
 
         self._captureThread = threading.Thread(
@@ -141,13 +150,6 @@ class LazyEyes(wx.Frame):
                 self._videoPanel.Refresh()
 
     def _applyEulerianVideoMagnification(self):
-
-        if (self._imageHeight, self._imageWidth) != \
-               self._image.shape[:2]:
-            # The image is an unexpected size.
-            # Sometimes this happens at the start of capture.
-            # Skip the image and continue.
-            return
 
         timestamp = timeit.default_timer()
 
@@ -200,7 +202,9 @@ class LazyEyes(wx.Frame):
         timeElapsed = endTime - startTime
         timePerFrame = \
                 timeElapsed / self._maxHistoryLength
-        #print 'FPS:', 1.0 / timePerFrame
+        fps = 1.0 / timePerFrame
+        wx.CallAfter(self._fpsStaticText.SetLabel,
+                     'FPS:  %.1f' % fps)
 
         # Apply the temporal bandpass filter.
         fftResult = fft(self._history, axis=0,
