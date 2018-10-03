@@ -2,7 +2,7 @@
 
 
 import numpy # Hint to PyInstaller
-from CVForwardCompat import cv2
+import cv2
 import requests
 import sys
 
@@ -28,7 +28,7 @@ def cvImageFromUrl(url):
     if not validateResponse(response):
         return None
     imageData = numpy.fromstring(response.content, numpy.uint8)
-    image = cv2.imdecode(imageData, cv2.CV_LOAD_IMAGE_COLOR)
+    image = cv2.imdecode(imageData, cv2.IMREAD_COLOR)
     if image is None:
         print >> sys.stderr, \
             'Failed to decode image from content of %s' % url

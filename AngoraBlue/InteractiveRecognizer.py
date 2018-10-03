@@ -1,5 +1,5 @@
 import numpy
-from CVForwardCompat import cv2
+import cv2
 import os
 import sys
 import threading
@@ -15,7 +15,6 @@ class InteractiveRecognizer(wx.Frame):
     def __init__(self, recognizerPath, cascadePath,
                  scaleFactor=1.3, minNeighbors=4,
                  minSizeProportional=(0.25, 0.25),
-                 flags=cv2.cv.CV_HAAR_SCALE_IMAGE,
                  rectColor=(0, 255, 0),
                  cameraDeviceID=0, imageSize=(1280, 720),
                  title='Interactive Recognizer'):
@@ -36,9 +35,9 @@ class InteractiveRecognizer(wx.Frame):
         self._currDetectedObject = None
 
         self._recognizerPath = recognizerPath
-        self._recognizer = cv2.createLBPHFaceRecognizer()
+        self._recognizer = cv2.face.LBPHFaceRecognizer_create()
         if os.path.isfile(recognizerPath):
-            self._recognizer.load(recognizerPath)
+            self._recognizer.read(recognizerPath)
             self._recognizerTrained = True
         else:
             self._recognizerTrained = False
@@ -49,7 +48,6 @@ class InteractiveRecognizer(wx.Frame):
         minImageSize = min(self._imageWidth, self._imageHeight)
         self._minSize = (int(minImageSize * minSizeProportional[0]),
                          int(minImageSize * minSizeProportional[1]))
-        self._flags = flags
         self._rectColor = rectColor
 
         style = wx.CLOSE_BOX | wx.MINIMIZE_BOX | wx.CAPTION | \
@@ -131,7 +129,7 @@ class InteractiveRecognizer(wx.Frame):
             modelDir = os.path.dirname(self._recognizerPath)
             if not os.path.isdir(modelDir):
                 os.makedirs(modelDir)
-            self._recognizer.save(self._recognizerPath)
+            self._recognizer.write(self._recognizerPath)
         self.Destroy()
 
     def _onQuitCommand(self, event):
@@ -169,7 +167,7 @@ class InteractiveRecognizer(wx.Frame):
         self._clearModelButton.Disable()
         if os.path.isfile(self._recognizerPath):
             os.remove(self._recognizerPath)
-        self._recognizer = cv2.createLBPHFaceRecognizer()
+        self._recognizer = cv2.face.LBPHFaceRecognizer_create()
 
     def _runCaptureLoop(self):
         while self._running:
@@ -197,7 +195,7 @@ class InteractiveRecognizer(wx.Frame):
                 self._equalizedGrayImage,
                 scaleFactor=self._scaleFactor,
                 minNeighbors=self._minNeighbors,
-                minSize=self._minSize, flags=self._flags)
+                minSize=self._minSize)
         for x, y, w, h in rects:
             cv2.rectangle(self._image, (x, y), (x+w, y+h),
                           self._rectColor, 1)

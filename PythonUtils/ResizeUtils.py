@@ -1,5 +1,5 @@
 import numpy # Hint to PyInstaller
-from CVForwardCompat import cv2
+import cv2
 
 
 def cvResizeAspectFill(src, maxSize,
@@ -27,8 +27,8 @@ def cvResizeCapture(capture, preferredSize):
 
     # Try to set the requested dimensions.
     w, h = preferredSize
-    capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, w)
-    capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, h)
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, w)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
 
     # Sometimes the dimensions fluctuate at the start of capture.
     # Discard two frames to allow for this.

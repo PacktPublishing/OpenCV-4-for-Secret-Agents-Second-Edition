@@ -2,7 +2,7 @@
 
 
 import numpy # Hint to PyInstaller
-from CVForwardCompat import cv2
+import cv2
 import getpass
 import os
 import socket
@@ -103,15 +103,15 @@ def main():
     minImageSize = min(imageWidth, imageHeight)
 
     humanDetector = cv2.CascadeClassifier(humanCascadePath)
-    humanRecognizer = cv2.createLBPHFaceRecognizer()
-    humanRecognizer.load(humanRecognizerPath)
+    humanRecognizer = cv2.face.LBPHFaceRecognizer_create()
+    humanRecognizer.read(humanRecognizerPath)
     humanMinSize = (int(minImageSize * 0.25),
                     int(minImageSize * 0.25))
     humanMaxDistance = 25
 
     catDetector = cv2.CascadeClassifier(catCascadePath)
-    catRecognizer = cv2.createLBPHFaceRecognizer()
-    catRecognizer.load(catRecognizerPath)
+    catRecognizer = cv2.face.LBPHFaceRecognizer_create()
+    catRecognizer.read(catRecognizerPath)
     catMinSize = (int(minImageSize * 0.125),
                   int(minImageSize * 0.125))
     catMaxDistance = 25
@@ -124,8 +124,7 @@ def main():
 
             humanRects = humanDetector.detectMultiScale(
                     equalizedGrayImage, scaleFactor=1.3,
-                    minNeighbors=4, minSize=humanMinSize,
-                    flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
+                    minNeighbors=4, minSize=humanMinSize)
             if recognizeAndReport(
                     humanRecognizer, grayImage, humanRects,
                     humanMaxDistance, 'human', smtpServer, login,
@@ -134,8 +133,7 @@ def main():
 
             catRects = catDetector.detectMultiScale(
                     equalizedGrayImage, scaleFactor=1.2,
-                    minNeighbors=1, minSize=catMinSize,
-                    flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
+                    minNeighbors=1, minSize=catMinSize)
             # Reject any cat faces that overlap with human faces.
             catRects = GeomUtils.difference(catRects, humanRects)
             if recognizeAndReport(

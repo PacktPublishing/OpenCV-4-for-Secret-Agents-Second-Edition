@@ -2,7 +2,7 @@
 
 
 import numpy
-from CVForwardCompat import cv2
+import cv2
 import os
 import threading
 import wx
@@ -99,7 +99,7 @@ class LivingHeadlights(wx.Frame):
 
         detectorParams.filterByConvexity = False
 
-        self._detector = cv2.SimpleBlobDetector(
+        self._detector = cv2.SimpleBlobDetector_create(
                 detectorParams)
 
         style = wx.CLOSE_BOX | wx.MINIMIZE_BOX | \
@@ -327,11 +327,11 @@ class LivingHeadlights(wx.Frame):
                 # Fill the circle with the selected color.
                 cv2.circle(self._image, centerAsInts,
                            radiusAsInt, colorBGR,
-                           cv2.cv.CV_FILLED, cv2.CV_AA)
+                           cv2.FILLED, cv2.LINE_AA)
                 # Outline the circle in black.
                 cv2.circle(self._image, centerAsInts,
                            radiusAsInt, (0, 0, 0), 1,
-                           cv2.CV_AA)
+                           cv2.LINE_AA)
 
                 if prevBlob is not None:
 
@@ -350,7 +350,7 @@ class LivingHeadlights(wx.Frame):
                     # circle with a black line.
                     cv2.line(self._image, prevCenterAsInts,
                              centerAsInts, (0, 0, 0), 1,
-                             cv2.CV_AA)
+                             cv2.LINE_AA)
 
                 prevBlob = blob
 

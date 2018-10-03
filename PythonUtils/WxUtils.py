@@ -1,5 +1,5 @@
 import numpy # Hint to PyInstaller
-from CVForwardCompat import cv2
+import cv2
 import wx
 
 

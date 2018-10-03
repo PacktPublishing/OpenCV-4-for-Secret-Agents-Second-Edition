@@ -3,7 +3,7 @@
 
 import collections
 import numpy
-from CVForwardCompat import cv2
+import cv2
 import threading
 import timeit
 import wx
