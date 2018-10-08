@@ -22,7 +22,7 @@ def recognizeAndReport(recognizer, grayImage, rects, maxDistance,
         crop = cv2.equalizeHist(grayImage[y:y+h, x:x+w])
         labelAsInt, distance = recognizer.predict(crop)
         labelAsStr = BinasciiUtils.intToFourChars(labelAsInt)
-        print noun, labelAsStr, distance
+        print('%s %s %d' % (noun, labelAsStr, distance))
         if distance <= maxDistance:
             subject = 'Angora Blue'
             message = 'We have sighted the %s known as %s.' % \
@@ -32,11 +32,12 @@ def recognizeAndReport(recognizer, grayImage, rects, maxDistance,
                         fromAddr, toAddrList, ccAddrList, subject,
                         message, login, password, smtpServer)
                 if problems:
-                    print >> sys.stderr, 'Email problems:', problems
+                    sys.stderr.write(
+                            'Email problems: {0}\n'.format(problems))
                 else:
                     return True
             except socket.gaierror:
-                print >> sys.stderr, 'Unable to reach email server'
+                sys.stderr.write('Unable to reach email server\n')
     return False
 
 def main():
@@ -49,8 +50,8 @@ def main():
     humanRecognizerPath = PyInstallerUtils.resourcePath(
             'recognizers/lbph_human_faces.xml')
     if not os.path.isfile(humanRecognizerPath):
-        print >> sys.stderr, \
-                'Human face recognizer not trained. Exiting.'
+        sys.stderr.write(
+                'Human face recognizer not trained. Exiting.\n')
         return
 
     catCascadePath = PyInstallerUtils.resourcePath(
@@ -65,36 +66,36 @@ def main():
     catRecognizerPath = PyInstallerUtils.resourcePath(
             'recognizers/lbph_cat_faces.xml')
     if not os.path.isfile(catRecognizerPath):
-        print >> sys.stderr, \
-                'Cat face recognizer not trained. Exiting.'
+        sys.stderr.write(
+                'Cat face recognizer not trained. Exiting.\n')
         return
 
-    print 'What email settings shall we use to send alerts?'
+    print('What email settings shall we use to send alerts?')
 
     defaultSMTPServer = 'smtp.gmail.com:587'
-    print 'Enter SMTP server (default: %s):' % defaultSMTPServer
+    print('Enter SMTP server (default: %s):' % defaultSMTPServer)
     smtpServer = sys.stdin.readline().rstrip()
     if not smtpServer:
         smtpServer = defaultSMTPServer
 
-    print 'Enter username:'
+    print('Enter username:')
     login = sys.stdin.readline().rstrip()
 
-    print 'Enter password:'
+    print('Enter password:')
     password = getpass.getpass('')
 
     defaultAddr = '%s@gmail.com' % login
-    print 'Enter "from" email address (default: %s):' % defaultAddr
+    print('Enter "from" email address (default: %s):' % defaultAddr)
     fromAddr = sys.stdin.readline().rstrip()
     if not fromAddr:
         fromAddr = defaultAddr
 
-    print 'Enter comma-separated "to" email addresses (default: %s):' % defaultAddr
+    print('Enter comma-separated "to" email addresses (default: %s):' % defaultAddr)
     toAddrList = sys.stdin.readline().rstrip().split(',')
     if toAddrList == ['']:
         toAddrList = [defaultAddr]
 
-    print 'Enter comma-separated "c.c." email addresses:'
+    print('Enter comma-separated "c.c." email addresses:')
     ccAddrList = sys.stdin.readline().rstrip().split(',')
 
     capture = cv2.VideoCapture(0)

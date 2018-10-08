@@ -3,6 +3,8 @@ import cv2
 import wx
 
 
+WX_MAJOR_VERSION = int(wx.__version__.split('.')[0])
+
 # Try to determine whether we are on Raspberry Pi.
 IS_RASPBERRY_PI = False
 try:
@@ -21,12 +23,18 @@ if IS_RASPBERRY_PI:
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         h, w = image.shape[:2]
         wxImage = wx.ImageFromBuffer(w, h, image)
-        bitmap = wx.BitmapFromImage(wxImage)
+        if WX_MAJOR_VERSION < 4:
+            bitmap = wx.BitmapFromImage(wxImage)
+        else:
+            bitmap = wx.Bitmap(wxImage)
         return bitmap
 else:
     def wxBitmapFromCvImage(image):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         h, w = image.shape[:2]
         # The following conversion fails on Raspberry Pi.
-        bitmap = wx.BitmapFromBuffer(w, h, image)
+        if WX_MAJOR_VERSION < 4:
+            bitmap = wx.BitmapFromBuffer(w, h, image)
+        else:
+            bitmap = wx.Bitmap.FromBuffer(w, h, image)
         return bitmap

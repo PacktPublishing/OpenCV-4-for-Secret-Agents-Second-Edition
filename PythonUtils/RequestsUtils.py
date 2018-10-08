@@ -18,9 +18,9 @@ def validateResponse(response):
     if statusCode == 200:
         return True
     url = response.request.url
-    print >> sys.stderr, \
-        'Received unexpected status code (%d) when requesting %s' % \
-        (statusCode, url)
+    sys.stderr.write(
+            'Received unexpected status code (%d) when requesting %s\n' % \
+            (statusCode, url))
     return False
 
 def cvImageFromUrl(url):
@@ -30,8 +30,8 @@ def cvImageFromUrl(url):
     imageData = numpy.fromstring(response.content, numpy.uint8)
     image = cv2.imdecode(imageData, cv2.IMREAD_COLOR)
     if image is None:
-        print >> sys.stderr, \
-            'Failed to decode image from content of %s' % url
+        sys.stderr.write(
+                'Failed to decode image from content of %s\n' % url)
     return image
 
 

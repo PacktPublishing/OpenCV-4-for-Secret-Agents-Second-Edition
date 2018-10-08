@@ -46,12 +46,12 @@ class LivingHeadlights(wx.Frame):
         self._configPath = configPath
         self._pixelDistBetweenLights = None
         if os.path.isfile(configPath):
-            file = open(self._configPath, 'r')
-            self._referencePixelDistBetweenLights = \
-                    pickle.load(file)
-            self._referenceMetersToCamera = \
-                    pickle.load(file)
-            self._convertMetersToFeet = pickle.load(file)
+            with open(self._configPath, 'rb') as file:
+                self._referencePixelDistBetweenLights = \
+                        pickle.load(file)
+                self._referenceMetersToCamera = \
+                        pickle.load(file)
+                self._convertMetersToFeet = pickle.load(file)
         else:
             self._referencePixelDistBetweenLights = None
             self._referenceMetersToCamera = None
@@ -194,11 +194,11 @@ class LivingHeadlights(wx.Frame):
         configDir = os.path.dirname(self._configPath)
         if not os.path.isdir(configDir):
             os.makedirs(configDir)
-        file = open(self._configPath, 'w')
-        pickle.dump(self._referencePixelDistBetweenLights,
-                    file)
-        pickle.dump(self._referenceMetersToCamera, file)
-        pickle.dump(self._convertMetersToFeet, file)
+        with open(self._configPath, 'wb') as file:
+            pickle.dump(self._referencePixelDistBetweenLights,
+                        file)
+            pickle.dump(self._referenceMetersToCamera, file)
+            pickle.dump(self._convertMetersToFeet, file)
         self.Destroy()
 
     def _onQuitCommand(self, event):

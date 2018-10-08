@@ -24,7 +24,7 @@ class LazyEyes(wx.Frame):
                  amplification=32.0, numPyramidLevels=2,
                  useLaplacianPyramid=True,
                  useGrayOverlay=True,
-                 numFFTThreads = 4, numIFFTThreads=4,
+                 numFFTThreads=4, numIFFTThreads=4,
                  cameraDeviceID=0, imageSize=(640, 480),
                  title='Lazy Eyes'):
 
