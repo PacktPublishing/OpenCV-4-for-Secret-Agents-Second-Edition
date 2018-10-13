@@ -2,10 +2,11 @@
 
 
 import collections
-import numpy
-import cv2
 import threading
 import timeit
+
+import numpy
+import cv2
 import wx
 
 import pyfftw.interfaces.cache
@@ -232,7 +233,8 @@ class LazyEyes(wx.Frame):
         if self._useGrayOverlay:
             overlay = cv2.cvtColor(overlay,
                                    cv2.COLOR_GRAY2BGR)
-        cv2.convertScaleAbs(self._image + overlay, self._image)
+        cv2.add(self._image, overlay, self._image,
+                dtype=cv2.CV_8U)
 
 
 def main():
