@@ -16,18 +16,18 @@ dist
 PythonUtils/image.png
 
 # Cascade training datasets
-AngoraBlue/cascade_training/CAT_DATASET_01
-AngoraBlue/cascade_training/CAT_DATASET_02
-AngoraBlue/cascade_training/faces
-AngoraBlue/cascade_training/urtho_negatives
-AngoraBlue/cascade_training/VOC2007
+Chapter003/cascade_training/CAT_DATASET_01
+Chapter003/cascade_training/CAT_DATASET_02
+Chapter003/cascade_training/faces
+Chapter003/cascade_training/urtho_negatives
+Chapter003/cascade_training/VOC2007
 
 # Cascade training intermediate output
-AngoraBlue/cascade_training/binary_description
-AngoraBlue/cascade_training/haarcascade_frontalcatface
-AngoraBlue/cascade_training/haarcascade_frontalcatface_extended
-AngoraBlue/cascade_training/lbpcascade_frontalcatface
+Chapter003/cascade_training/binary_description
+Chapter003/cascade_training/haarcascade_frontalcatface
+Chapter003/cascade_training/haarcascade_frontalcatface_extended
+Chapter003/cascade_training/lbpcascade_frontalcatface
 
 # Application output
-AngoraBlue/recognizers
-LivingHeadlights/config.dat
+Chapter003/recognizers
+Chapter005/config.dat
