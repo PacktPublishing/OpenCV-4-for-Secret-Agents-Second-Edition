@@ -6,6 +6,8 @@ import glob
 import math
 import sys
 
+from __future__ import print_function
+
 
 outputImageExtension = '.out.jpg'
 
@@ -19,7 +21,7 @@ def describeNegativeHelper(imagePath, output):
     # Save an equalized version of the image.
     cv2.imwrite(outputImagePath, equalizedGray(image))
     # Append the equalized image to the negative description.
-    print >> output, outputImagePath
+    print(outputImagePath, file=output)
 
 def describeNegative():
     output = open('negative_description.txt', 'w')
@@ -155,9 +157,9 @@ def describePositive():
             # Straighten and crop the cat face.
             crop = preprocessCatFace(coords, image)
             if crop is None:
-                print >> sys.stderr, \
-                        'Failed to preprocess image at %s.' % \
-                        imagePath
+                sys.stderr.write(
+                        'Failed to preprocess image at %s.\n' % \
+                        imagePath)
                 continue
             # Save the crop.
             cropPath = '%s%s' % (imagePath, outputImageExtension)
@@ -165,7 +167,7 @@ def describePositive():
             # Append the cropped face and its bounds to the
             # positive description.
             h, w = crop.shape[:2]
-            print >> output, cropPath, 1, 0, 0, w, h
+            print('%s 1 0 0 %d %d' % (cropPath, w, h), file=output)
 
 
 def main():    
