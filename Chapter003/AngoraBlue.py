@@ -22,7 +22,7 @@ def recognizeAndReport(recognizer, grayImage, rects, maxDistance,
         crop = cv2.equalizeHist(grayImage[y:y+h, x:x+w])
         labelAsInt, distance = recognizer.predict(crop)
         labelAsStr = BinasciiUtils.intToFourChars(labelAsInt)
-        print('%s %s %d' % (noun, labelAsStr, distance))
+        #print('%s %s %d' % (noun, labelAsStr, distance))
         if distance <= maxDistance:
             subject = 'Angora Blue'
             message = 'We have sighted the %s known as %s.' % \
