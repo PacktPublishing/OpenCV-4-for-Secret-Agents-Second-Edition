@@ -5,3 +5,4 @@ This repository contains sample projects to accompany the book *OpenCV 4 for Sec
 ## Third-party Content
 
 * Icons by Tatyana Suhodolska (www.artdesigncat.com)
+* Images from various sources, to train and test classifiers
