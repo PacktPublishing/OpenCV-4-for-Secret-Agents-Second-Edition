@@ -1,4 +1,4 @@
-set PYINSTALLER=C:\PyInstaller\pyinstaller.py
+set PYINSTALLER=pyinstaller
 
 REM Remove any previous build of the app.
 rmdir build /s /q
@@ -8,7 +8,7 @@ REM Train the classifier.
 python HistogramClassifier.py
 
 REM Build the app.
-python "%PYINSTALLER%" Luxocator.spec
+"%PYINSTALLER%" --onefile --windowed Luxocator.spec
 
 REM Make the app an executable.
 rename dist\Luxocator Luxocator.exe

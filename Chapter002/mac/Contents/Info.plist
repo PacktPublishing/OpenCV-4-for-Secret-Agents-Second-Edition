@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>CFBundleExecutable</key>
 	<string>MacOS/Luxocator</string>
 	<key>CFBundleName</key>
@@ -16,8 +16,6 @@
 	<string>icon-windowed.icns</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>LSBackgroundOnly</key>
-	<string>1</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 </dict>
