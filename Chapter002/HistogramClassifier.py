@@ -55,8 +55,9 @@ class HistogramClassifier(object):
         for label, referenceHists in self._references.items():
             similarity = 0.0
             for referenceHist in referenceHists:
-                similarity += numpy.sum(numpy.minimum(
-                        referenceHist.todense(), queryHist))
+                similarity += cv2.compareHist(
+                        referenceHist.todense(), queryHist,
+                        cv2.HISTCMP_INTERSECT)
             similarity /= len(referenceHists)
             if self.verbose:
                 print('    %8f  %s' % (similarity, label))
