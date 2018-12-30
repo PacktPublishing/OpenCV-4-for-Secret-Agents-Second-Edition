@@ -10,7 +10,9 @@ import sys
 # Spoof a browser's User-Agent string.
 # Otherwise, some sites will reject us as a bot.
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0'
+    'User-Agent': 'Mozilla/5.0 ' \
+                  '(Macintosh; Intel Mac OS X 10.9; rv:25.0) ' \
+                  'Gecko/20100101 Firefox/25.0'
 }
 
 def validateResponse(response):

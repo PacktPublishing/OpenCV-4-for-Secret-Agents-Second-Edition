@@ -72,9 +72,10 @@ class ImageSearchSession(object):
         self._numResultsRequested = numResultsRequested
         self._offset = offset
 
+        params = {'color':'ColorOnly', 'imageType':'Photo'}
+
         searchService = PyMsCognitiveImageSearch(
-                bingKey, query,
-                custom_params={'color':'ColorOnly', 'imageType':'Photo'})
+                bingKey, query, custom_params=params)
         searchService.current_offset = offset
 
         try:
