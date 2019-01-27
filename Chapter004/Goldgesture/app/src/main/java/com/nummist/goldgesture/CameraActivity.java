@@ -181,46 +181,6 @@ public final class CameraActivity extends Activity
         }
     }
 
-    void showRequestPermissionRationale() {
-        AlertDialog dialog = new AlertDialog.Builder(this).create();
-        dialog.setTitle("Camera, please");
-        dialog.setMessage(
-                "Goldgesture uses the camera to see you nod or shake your head. " +
-                "You will be asked for camera access.");
-        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        ActivityCompat.requestPermissions(CameraActivity.this,
-                                new String[] { Manifest.permission.CAMERA },
-                                PERMISSIONS_REQUEST_CAMERA);
-                    }
-                });
-        dialog.show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-            String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_CAMERA: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.i(TAG, "Camera permissions were granted just now");
-
-                    // Start the camera.
-                    mCameraView.enableView();
-                } else {
-                    Log.e(TAG, "Camera permissions were denied");
-                    finish();
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -232,6 +192,46 @@ public final class CameraActivity extends Activity
             mAudioTree.stop();
         }
         resetGestures();
+    }
+
+    void showRequestPermissionRationale() {
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.setTitle("Camera, please");
+        dialog.setMessage(
+                "Goldgesture uses the camera to see you nod or shake " +
+                "your head. You will be asked for camera access.");
+        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        ActivityCompat.requestPermissions(
+                                CameraActivity.this,
+                                new String[] {
+                                        Manifest.permission.CAMERA },
+                                PERMISSIONS_REQUEST_CAMERA);
+                    }
+                });
+        dialog.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode,
+            final String permissions[], final int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CAMERA: {
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.i(TAG, "Camera permissions were granted just now");
+
+                    // Start the camera.
+                    mCameraView.enableView();
+                } else {
+                    Log.e(TAG, "Camera permissions were denied");
+                    finish();
+                }
+                break;
+            }
+        }
     }
 
     @Override

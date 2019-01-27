@@ -280,7 +280,8 @@ public final class YesNoAudioTree {
         mMediaPlayer.setOnCompletionListener(
                 new OnCompletionListener() {
                     @Override
-                    public void onCompletion(final MediaPlayer mediaPlayer) {
+                    public void onCompletion(
+                            final MediaPlayer mediaPlayer) {
                         mediaPlayer.release();
                         if (mMediaPlayer == mediaPlayer) {
                             mMediaPlayer = null;
