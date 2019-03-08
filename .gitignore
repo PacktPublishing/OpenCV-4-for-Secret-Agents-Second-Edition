@@ -12,6 +12,21 @@ Thumbs.db
 build
 dist
 
+# Unity generated files
+Library
+Logs
+obj
+.vs
+*.csproj
+*.sln
+
+# OpenCV for Unity (must be purchased from Unity Asset Store)
+OpenCVForUnity
+OpenCVForUnity.meta
+
+# Builds of Android apps
+*.apk
+
 # Test output
 Chapter002/image.png
 PythonUtils/image.png
