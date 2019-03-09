@@ -11,8 +11,12 @@ public class Launcher : MonoBehaviour {
     void Start() {
 
 #if PLATFORM_ANDROID
-        // Ask the user's permission for camera access.
-        Permission.RequestUserPermission(Permission.Camera);
+        if (!Permission.HasUserAuthorizedPermission(
+                Permission.Camera))
+        {
+            // Ask the user's permission for camera access.
+            Permission.RequestUserPermission(Permission.Camera);
+        }
 #endif
 
         SceneManager.LoadScene("Rollingball");
