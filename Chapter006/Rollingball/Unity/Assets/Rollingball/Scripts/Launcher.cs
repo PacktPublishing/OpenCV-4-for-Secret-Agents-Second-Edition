@@ -6,19 +6,22 @@ using UnityEngine.Android;
 #endif
 
 
-public class Launcher : MonoBehaviour {
+namespace com.nummist.rollingball {
 
-    void Start() {
+    public class Launcher : MonoBehaviour {
+
+        void Start() {
 
 #if PLATFORM_ANDROID
-        if (!Permission.HasUserAuthorizedPermission(
-                Permission.Camera))
-        {
-            // Ask the user's permission for camera access.
-            Permission.RequestUserPermission(Permission.Camera);
-        }
+            if (!Permission.HasUserAuthorizedPermission(
+                    Permission.Camera))
+            {
+                // Ask the user's permission for camera access.
+                Permission.RequestUserPermission(Permission.Camera);
+            }
 #endif
 
-        SceneManager.LoadScene("Rollingball");
+            SceneManager.LoadScene("Rollingball");
+        }
     }
 }
