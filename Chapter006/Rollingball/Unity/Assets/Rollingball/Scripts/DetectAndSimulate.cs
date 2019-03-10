@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.ImgprocModule;
@@ -256,7 +255,6 @@ namespace com.nummist.rollingball {
             Imgproc.cvtColor(rgbaMat, grayMat,
                              Imgproc.COLOR_RGBA2GRAY);
             Imgproc.Canny(grayMat, cannyMat, 50.0, 200.0);
-            Imgproc.equalizeHist(grayMat, grayMat);
 
             UpdateCircles();
             UpdateLines();
