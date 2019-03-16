@@ -279,8 +279,7 @@ namespace com.nummist.rollingball {
             int numHoughCircles = houghCircles.cols() *
                                   houghCircles.rows() *
                                   houghCircles.channels();
-            if (numHoughCircles == 0)
-            {
+            if (numHoughCircles == 0) {
                 return;
             }
             float[] houghCirclesArray = new float[numHoughCircles];
@@ -329,8 +328,7 @@ namespace com.nummist.rollingball {
             int numHoughLines = houghLines.cols() *
                                 houghLines.rows() *
                                 houghLines.channels();
-            if (numHoughLines == 0)
-            {
+            if (numHoughLines == 0) {
                 return;
             }
             int[] houghLinesArray = new int[numHoughLines];
