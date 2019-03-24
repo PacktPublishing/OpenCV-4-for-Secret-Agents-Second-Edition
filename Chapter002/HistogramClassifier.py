@@ -25,7 +25,7 @@ class HistogramClassifier(object):
         # Normalize the histogram.
         hist[:] = hist * (1.0 / numpy.sum(hist))
         # Convert the histogram to one column for efficient storage.
-        hist = hist.reshape(16777216, 1)
+        hist = hist.reshape(16777216, 1)  # 16777216 == pow(2, 24)
         if sparse:
             # Convert the histogram to a sparse matrix.
             hist = scipy.sparse.csc_matrix(hist)
