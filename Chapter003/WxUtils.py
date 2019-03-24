@@ -1,1 +1,40 @@
-../PythonUtils/WxUtils.py
+import numpy # Hint to PyInstaller
+import cv2
+import wx
+
+
+WX_MAJOR_VERSION = int(wx.__version__.split('.')[0])
+
+# Try to determine whether we are on Raspberry Pi.
+IS_RASPBERRY_PI = False
+try:
+    with open('/proc/cpuinfo') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('Hardware') and \
+                    line.endswith('BCM2708'):
+                IS_RASPBERRY_PI = True
+                break
+except:
+    pass
+
+if IS_RASPBERRY_PI:
+    def wxBitmapFromCvImage(image):
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        h, w = image.shape[:2]
+        wxImage = wx.ImageFromBuffer(w, h, image)
+        if WX_MAJOR_VERSION < 4:
+            bitmap = wx.BitmapFromImage(wxImage)
+        else:
+            bitmap = wx.Bitmap(wxImage)
+        return bitmap
+else:
+    def wxBitmapFromCvImage(image):
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        h, w = image.shape[:2]
+        # The following conversion fails on Raspberry Pi.
+        if WX_MAJOR_VERSION < 4:
+            bitmap = wx.BitmapFromBuffer(w, h, image)
+        else:
+            bitmap = wx.Bitmap.FromBuffer(w, h, image)
+        return bitmap
