@@ -37,8 +37,6 @@ class LazyEyes(wx.Frame):
         size = ResizeUtils.cvResizeCapture(
                 self._capture, imageSize)
         w, h = size
-        self._imageWidth = w
-        self._imageHeight = h
 
         self._image = None
 
@@ -106,7 +104,8 @@ class LazyEyes(wx.Frame):
 
         rootSizer = wx.BoxSizer(wx.VERTICAL)
         rootSizer.Add(self._videoPanel)
-        rootSizer.Add(controlsSizer, 0, wx.EXPAND | wx.ALL, border)
+        rootSizer.Add(controlsSizer, 0,
+                      wx.EXPAND | wx.ALL, border)
         self.SetSizerAndFit(rootSizer)
 
         self._captureThread = threading.Thread(
