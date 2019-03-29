@@ -66,6 +66,9 @@ class LivingHeadlights(wx.Frame):
         self._image = None
         self._grayImage = None
 
+        self._imageFrontBuffer = None
+        self._imageFrontBufferLock = threading.Lock()
+
         minDistBetweenBlobs = \
                 min(w, h) * \
                 minDistBetweenBlobsProportional
@@ -209,20 +212,21 @@ class LivingHeadlights(wx.Frame):
 
     def _onVideoPanelPaint(self, event):
 
-        if self._videoBitmap is None:
+        self._imageFrontBufferLock.acquire()
+
+        if self._imageFrontBuffer is None:
+            self._imageFrontBufferLock.release()
             return
+
+        # Convert the image to bitmap format.
+        self._videoBitmap = \
+            WxUtils.wxBitmapFromCvImage(self._imageFrontBuffer)
+
+        self._imageFrontBufferLock.release()
 
         # Show the bitmap.
         dc = wx.BufferedPaintDC(self._videoPanel)
         dc.DrawBitmap(self._videoBitmap, 0, 0)
-
-    def _updateVideoBitmap(self):
-
-        # Convert the image to bitmap format.
-        self._videoBitmap = \
-            WxUtils.wxBitmapFromCvImage(self._image)
-
-        self._videoPanel.Refresh()
 
     def _onSelectMeters(self, event):
         self._convertMetersToFeet = False
@@ -250,7 +254,18 @@ class LivingHeadlights(wx.Frame):
                 self._detectAndEstimateDistance()
                 if (self.mirrored):
                     self._image[:] = numpy.fliplr(self._image)
-                wx.CallAfter(self._updateVideoBitmap)
+
+                # Perform a thread-safe swap of the front and
+                # back image buffers.
+                self._imageFrontBufferLock.acquire()
+                self._imageFrontBuffer, self._image = \
+                    self._image, self._imageFrontBuffer
+                self._imageFrontBufferLock.release()
+
+                # Send a refresh event to the video panel so
+                # that it will draw the image from the front
+                # buffer.
+                self._videoPanel.Refresh()
 
     def _detectAndEstimateDistance(self):
 
