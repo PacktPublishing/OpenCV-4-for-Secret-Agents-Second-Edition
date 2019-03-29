@@ -216,6 +216,14 @@ class LivingHeadlights(wx.Frame):
         dc = wx.BufferedPaintDC(self._videoPanel)
         dc.DrawBitmap(self._videoBitmap, 0, 0)
 
+    def _updateVideoBitmap(self):
+
+        # Convert the image to bitmap format.
+        self._videoBitmap = \
+            WxUtils.wxBitmapFromCvImage(self._image)
+
+        self._videoPanel.Refresh()
+
     def _onSelectMeters(self, event):
         self._convertMetersToFeet = False
 
@@ -242,13 +250,7 @@ class LivingHeadlights(wx.Frame):
                 self._detectAndEstimateDistance()
                 if (self.mirrored):
                     self._image[:] = numpy.fliplr(self._image)
-
-                # Convert the image to bitmap format.
-                self._videoBitmap = \
-                        WxUtils.wxBitmapFromCvImage(
-                                self._image)
-
-                self._videoPanel.Refresh()
+                wx.CallAfter(self._updateVideoBitmap)
 
     def _detectAndEstimateDistance(self):
 

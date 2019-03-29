@@ -133,6 +133,14 @@ class LazyEyes(wx.Frame):
         dc = wx.BufferedPaintDC(self._videoPanel)
         dc.DrawBitmap(self._videoBitmap, 0, 0)
 
+    def _updateVideoBitmap(self):
+
+        # Convert the image to bitmap format.
+        self._videoBitmap = \
+            WxUtils.wxBitmapFromCvImage(self._image)
+
+        self._videoPanel.Refresh()
+
     def _runCaptureLoop(self):
         while self._running:
             success, self._image = self._capture.read(
@@ -141,13 +149,7 @@ class LazyEyes(wx.Frame):
                 self._applyEulerianVideoMagnification()
                 if (self.mirrored):
                     self._image[:] = numpy.fliplr(self._image)
-
-                # Convert the image to bitmap format.
-                self._videoBitmap = \
-                        WxUtils.wxBitmapFromCvImage(
-                                self._image)
-
-                self._videoPanel.Refresh()
+                wx.CallAfter(self._updateVideoBitmap)
 
     def _applyEulerianVideoMagnification(self):
 
