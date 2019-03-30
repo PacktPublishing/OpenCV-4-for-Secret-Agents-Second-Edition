@@ -247,6 +247,7 @@ class LivingHeadlights(wx.Frame):
             self._referenceMetersToCamera *= 0.3048
 
     def _runCaptureLoop(self):
+
         while self._running:
             success, self._image = self._capture.read(
                     self._image)

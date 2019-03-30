@@ -182,6 +182,7 @@ class InteractiveRecognizer(wx.Frame):
         self._recognizer = cv2.face.LBPHFaceRecognizer_create()
 
     def _runCaptureLoop(self):
+
         while self._running:
             success, self._image = self._capture.read(
                     self._image)

@@ -168,6 +168,7 @@ class Sunbaker(wx.Frame):
         dc.DrawBitmap(self._videoBitmap, 0, 0)
 
     def _runCaptureLoop(self):
+
         while self._running:
             success, self._image = self._capture.read(
                     self._image)
