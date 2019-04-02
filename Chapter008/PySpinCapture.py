@@ -5,7 +5,8 @@ import cv2
 class PySpinCapture:
 
 
-    def __init__(self, index, roi, binningRadius=1, isMonochrome=False):
+    def __init__(self, index, roi, binningRadius=1,
+                 isMonochrome=False):
 
         self._system = PySpin.System.GetInstance()
 
@@ -17,43 +18,53 @@ class PySpinCapture:
         self._nodemap = self._camera.GetNodeMap()
 
         # Enable continuous acquisition mode.
-        nodeAcquisitionMode = PySpin.CEnumerationPtr(self._nodemap.GetNode(
-            'AcquisitionMode'))
-        nodeAcquisitionModeContinuous = nodeAcquisitionMode.GetEntryByName(
-            'Continuous')
-        acquisitionModeContinuous = nodeAcquisitionModeContinuous.GetValue()
-        nodeAcquisitionMode.SetIntValue(acquisitionModeContinuous)
+        nodeAcquisitionMode = PySpin.CEnumerationPtr(
+                self._nodemap.GetNode('AcquisitionMode'))
+        nodeAcquisitionModeContinuous = \
+                nodeAcquisitionMode.GetEntryByName(
+                        'Continuous')
+        acquisitionModeContinuous = \
+                nodeAcquisitionModeContinuous.GetValue()
+        nodeAcquisitionMode.SetIntValue(
+                acquisitionModeContinuous)
 
         # Set the pixel format.
-        nodePixelFormat = PySpin.CEnumerationPtr(self._nodemap.GetNode('PixelFormat'))
+        nodePixelFormat = PySpin.CEnumerationPtr(
+            self._nodemap.GetNode('PixelFormat'))
         if isMonochrome:
             # Enable Mono8 mode.
             nodePixelFormatMono8 = PySpin.CEnumEntryPtr(
-                nodePixelFormat.GetEntryByName('Mono8'))
-            pixelFormatMono8 = nodePixelFormatMono8.GetValue()
+                    nodePixelFormat.GetEntryByName('Mono8'))
+            pixelFormatMono8 = \
+                    nodePixelFormatMono8.GetValue()
             nodePixelFormat.SetIntValue(pixelFormatMono8)
         else:
             # Enable BGR8 mode.
             nodePixelFormatBGR8 = PySpin.CEnumEntryPtr(
-                nodePixelFormat.GetEntryByName('BGR8'))
+                    nodePixelFormat.GetEntryByName('BGR8'))
             pixelFormatBGR8 = nodePixelFormatBGR8.GetValue()
             nodePixelFormat.SetIntValue(pixelFormatBGR8)
 
         # Set the vertical binning radius.
-        # The horizontal binning radius is automatically set to the same value.
-        nodeBinningVertical = PySpin.CIntegerPtr(self._nodemap.GetNode(
-            'BinningVertical'))
+        # The horizontal binning radius is automatically set
+        # to the same value.
+        nodeBinningVertical = PySpin.CIntegerPtr(
+                self._nodemap.GetNode('BinningVertical'))
         nodeBinningVertical.SetValue(binningRadius)
 
         # Set the ROI.
         x, y, w, h  = roi
-        nodeOffsetX = PySpin.CIntegerPtr(self._nodemap.GetNode('OffsetX'))
+        nodeOffsetX = PySpin.CIntegerPtr(
+                self._nodemap.GetNode('OffsetX'))
         nodeOffsetX.SetValue(x)
-        nodeOffsetY = PySpin.CIntegerPtr(self._nodemap.GetNode('OffsetY'))
+        nodeOffsetY = PySpin.CIntegerPtr(
+                self._nodemap.GetNode('OffsetY'))
         nodeOffsetY.SetValue(y)
-        nodeWidth = PySpin.CIntegerPtr(self._nodemap.GetNode('Width'))
+        nodeWidth = PySpin.CIntegerPtr(
+                self._nodemap.GetNode('Width'))
         nodeWidth.SetValue(w)
-        nodeHeight = PySpin.CIntegerPtr(self._nodemap.GetNode('Height'))
+        nodeHeight = PySpin.CIntegerPtr(
+                self._nodemap.GetNode('Height'))
         nodeHeight.SetValue(h)
 
         self._camera.BeginAcquisition()
@@ -61,10 +72,12 @@ class PySpinCapture:
 
     def get(self, propId):
         if propId == cv2.CAP_PROP_FRAME_WIDTH:
-            nodeWidth = PySpin.CIntegerPtr(self._nodemap.GetNode('Width'))
+            nodeWidth = PySpin.CIntegerPtr(
+                    self._nodemap.GetNode('Width'))
             return float(nodeWidth.GetValue())
         if propId == cv2.CAP_PROP_FRAME_HEIGHT:
-            nodeHeight = PySpin.CIntegerPtr(self._nodemap.GetNode('Height'))
+            nodeHeight = PySpin.CIntegerPtr(
+                    self._nodemap.GetNode('Height'))
             return float(nodeHeight.GetValue())
         return 0.0
 
@@ -83,9 +96,11 @@ class PySpinCapture:
         w = cameraImage.GetWidth()
         numChannels = cameraImage.GetNumChannels()
         if numChannels > 1:
-            cameraImageData = cameraImage.GetData().reshape(h, w, numChannels)
+            cameraImageData = cameraImage.GetData().reshape(
+                    h, w, numChannels)
         else:
-            cameraImageData = cameraImage.GetData().reshape(h, w)
+            cameraImageData = cameraImage.GetData().reshape(
+                    h, w)
 
         if image is None:
             image = cameraImageData.copy()
