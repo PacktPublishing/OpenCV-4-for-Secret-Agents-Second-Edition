@@ -1,27 +1,31 @@
-set base_dir=%~dp0
+REM On Windows, opencv_createsamples and opencv_traincascades expect absolute paths.
+REM Set baseDir to be the absolute path to this script's directory.
+set baseDir=%~dp0
 
-set vec=%base_dir%\binary_description
-set info=%base_dir%\positive_description.txt
-set bg=%base_dir%\negative_description.txt
+REM Use baseDir to construct other absolute paths.
+
+set vec=%baseDir%\binary_description
+set info=%baseDir%\positive_description.txt
+set bg=%baseDir%\negative_description.txt
 
 REM Uncomment the next 4 variables for LBP training.
 REM set featureType=LBP
-REM set data=%base_dir%\lbpcascade_frontalcatface\\
-REM set dst=%base_dir%\..\\cascades\\lbpcascade_frontalcatface.xml
+REM set data=%baseDir%\lbpcascade_frontalcatface\\
+REM set dst=%baseDir%\..\\cascades\\lbpcascade_frontalcatface.xml
 REM set mode=BASIC
 
 REM Uncomment the next 4 variables for Haar training with basic
 REM features.
 set featureType=HAAR
-set data=%base_dir%\haarcascade_frontalcatface\\
-set dst=%base_dir%\..\\cascades\\haarcascade_frontalcatface.xml
+set data=%baseDir%\haarcascade_frontalcatface\\
+set dst=%baseDir%\..\\cascades\\haarcascade_frontalcatface.xml
 set mode=BASIC
 
 REM Uncomment the next 4 variables for Haar training with
 REM extended features.
 REM set featureType=HAAR
-REM set data=%base_dir%\haarcascade_frontalcatface_extended\\
-REM set dst=%base_dir%\..\\cascades\\haarcascade_frontalcatface_extended.xml
+REM set data=%baseDir%\haarcascade_frontalcatface_extended\\
+REM set dst=%baseDir%\..\\cascades\\haarcascade_frontalcatface_extended.xml
 REM set mode=ALL
 
 REM Set numPosTotal to be the line count of info.
