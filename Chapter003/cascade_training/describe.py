@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 
+from __future__ import print_function
+
 import cv2
 import glob
 import math
 import sys
-
-from __future__ import print_function
 
 
 outputImageExtension = '.out.jpg'
@@ -124,7 +124,7 @@ def preprocessCatFace(coords, image):
         minY = 0
     
     # Crop the face.
-    crop = straight[minY:minY+h, minX:minX+w]
+    crop = straight[int(minY):int(minY+h), int(minX):int(minX+w)]
     # Convert the crop to equalized grayscale.
     crop = equalizedGray(crop)
     # Return the crop.
