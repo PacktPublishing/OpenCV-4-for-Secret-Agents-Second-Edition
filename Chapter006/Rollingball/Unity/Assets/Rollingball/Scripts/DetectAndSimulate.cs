@@ -275,16 +275,23 @@ namespace com.nummist.rollingball {
             // Clear the previous coordinates.
             circles.Clear();
 
-            // Iterate over the circles.
-            int numHoughCircles = houghCircles.cols() *
-                                  houghCircles.rows() *
-                                  houghCircles.channels();
-            if (numHoughCircles == 0) {
+            // Count the elements in the matrix of Hough circles.
+            // Each circle should have 3 elements: { x, y, radius }
+            int numHoughCircleElems = houghCircles.cols() *
+                                      houghCircles.rows() *
+                                      houghCircles.channels();
+
+            if (numHoughCircleElems == 0) {
                 return;
             }
-            float[] houghCirclesArray = new float[numHoughCircles];
+
+            // Convert the matrix of Hough circles to a 1D array:
+            // { x_0, y_0, radius_0, ..., x_n, y_n, radius_n }
+            float[] houghCirclesArray = new float[numHoughCircleElems];
             houghCircles.get(0, 0, houghCirclesArray);
-            for (int i = 0; i < numHoughCircles; i += 3) {
+
+            // Iterate over the circles.
+            for (int i = 0; i < numHoughCircleElems; i += 3) {
 
                 // Convert circles' image coordinates to
                 // screen coordinates.
@@ -324,16 +331,25 @@ namespace com.nummist.rollingball {
             // Clear the previous coordinates.
             lines.Clear();
 
-            // Iterate over the lines.
-            int numHoughLines = houghLines.cols() *
-                                houghLines.rows() *
-                                houghLines.channels();
-            if (numHoughLines == 0) {
+            // Count the elements in the matrix of Hough lines.
+            // Each line should have 4 elements:
+            // { x_start, y_start, x_end, y_end }
+            int numHoughLineElems = houghLines.cols() *
+                                    houghLines.rows() *
+                                    houghLines.channels();
+
+            if (numHoughLineElems == 0) {
                 return;
             }
-            int[] houghLinesArray = new int[numHoughLines];
+
+            // Convert the matrix of Hough circles to a 1D array:
+            // { x_start_0, y_start_0, x_end_0, y_end_0, ...,
+            //   x_start_n, y_start_n, x_end_n, y_end_n }
+            int[] houghLinesArray = new int[numHoughLineElems];
             houghLines.get(0, 0, houghLinesArray);
-            for (int i = 0; i < numHoughLines; i += 4) {
+
+            // Iterate over the lines.
+            for (int i = 0; i < numHoughLineElems; i += 4) {
 
                 // Convert lines' image coordinates to
                 // screen coordinates.
