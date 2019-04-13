@@ -203,7 +203,8 @@ public final class CameraActivity extends Activity
                 "your head. You will be asked for camera access.");
         dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
                         dialog.dismiss();
                         ActivityCompat.requestPermissions(
                                 CameraActivity.this,
