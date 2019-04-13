@@ -19,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -69,8 +70,8 @@ public final class CameraActivity extends Activity
     private static final float MAX_FEATURE_ERROR = 200f;
 
     // Parameters for gesture detection
-    private static final double MIN_SHAKE_DIST_PROPORTIONAL = 0.04;
-    private static final double MIN_NOD_DIST_PROPORTIONAL = 0.005;
+    private static final double MIN_SHAKE_DIST_PROPORTIONAL = 0.01;
+    private static final double MIN_NOD_DIST_PROPORTIONAL = 0.0025;
     private static final double MIN_BACK_AND_FORTH_COUNT = 2;
 
     // The camera view.
@@ -304,7 +305,7 @@ public final class CameraActivity extends Activity
         Imgproc.cvtColor(rgba, mGrayUnoriented,
                 Imgproc.COLOR_RGBA2GRAY);
         Core.transpose(mGrayUnoriented, mEqualizedGray);
-        Core.flip(mEqualizedGray, mEqualizedGray, -1);
+        Core.flip(mEqualizedGray, mEqualizedGray, 0);
         Imgproc.equalizeHist(mEqualizedGray, mEqualizedGray);
 
         final List<Point> featuresList;
@@ -313,7 +314,7 @@ public final class CameraActivity extends Activity
                 mEqualizedGray, mFaces, SCALE_FACTOR, MIN_NEIGHBORS,
                 FLAGS, mMinSize, mMaxSize);
 
-        if (mFaces.rows() > 0) {
+        if (mFaces.rows() > 0) { // Detected at least one face
 
             // Get the first detected face.
             final double[] face = mFaces.get(0, 0);
@@ -327,8 +328,8 @@ public final class CameraActivity extends Activity
 
             // Draw the face.
             Imgproc.rectangle(
-                    rgba, new Point(mImageWidth-minY, mImageHeight-minX),
-                    new Point(mImageWidth-maxY, mImageHeight-maxX),
+                    rgba, new Point(mImageWidth - maxY, minX),
+                    new Point(mImageWidth - minY, maxX),
                     mFaceRectColor);
 
             // Create a mask for the face region.
@@ -364,7 +365,7 @@ public final class CameraActivity extends Activity
             }
             mWasTrackingFace = true;
 
-        } else {
+        } else { // Did not detect any face
             Video.calcOpticalFlowPyrLK(
                     mLastEqualizedGray, mEqualizedGray, mLastFeatures,
                     mFeatures, mFeatureStatuses, mFeatureErrors);
@@ -406,7 +407,7 @@ public final class CameraActivity extends Activity
             final Point p = featuresList.get(i);
             final Point pTrans = new Point(
                     mImageWidth - p.y,
-                    mImageHeight - p.x);
+                    p.x);
             Imgproc.circle(rgba, pTrans, 8, mFeatureColor);
         }
 
