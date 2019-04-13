@@ -1,4 +1,5 @@
-REM On Windows, opencv_createsamples and opencv_traincascades expect absolute paths.
+REM On Windows, opencv_createsamples and opencv_traincascades expect
+REM absolute paths.
 REM Set baseDir to be the absolute path to this script's directory.
 set baseDir=%~dp0
 
