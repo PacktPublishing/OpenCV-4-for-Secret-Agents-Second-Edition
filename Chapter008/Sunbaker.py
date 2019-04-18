@@ -14,11 +14,10 @@ from pyfftw.interfaces.scipy_fftpack import fft
 from pyfftw.interfaces.scipy_fftpack import ifft
 from scipy.fftpack import fftfreq
 
-import ResizeUtils
 import WxUtils
 
 try:
-    from PySpinCapture import PySpinCapture
+    import PySpinCapture
 except ImportError:
     PySpinCapture = None
 
@@ -282,9 +281,10 @@ def main():
 
     app = wx.App()
 
-    if PySpinCapture is not None:
+    if PySpinCapture is not None and \
+            PySpinCapture.getNumCameras() > 0:
         isCaptureMonochrome = True
-        capture = PySpinCapture(
+        capture = PySpinCapture.PySpinCapture(
                 0, roi=(0, 0, 960, 600), binningRadius=2,
                 isMonochrome=isCaptureMonochrome)
     else:

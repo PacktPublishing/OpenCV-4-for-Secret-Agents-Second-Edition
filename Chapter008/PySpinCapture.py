@@ -2,6 +2,13 @@ import PySpin
 import cv2
 
 
+def getNumCameras():
+    system = PySpin.System.GetInstance()
+    numCameras = len(system.GetCameras())
+    system.ReleaseInstance()
+    return numCameras
+
+
 class PySpinCapture:
 
 
