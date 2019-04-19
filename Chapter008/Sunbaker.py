@@ -52,8 +52,8 @@ class Sunbaker(wx.Frame):
             isCaptureMonochrome = (len(image.shape) == 2)
         else:
             # Use the nominal image dimensions.
-            w = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
-            h = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
+            w = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+            h = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
         size = (w, h)
         if isCaptureMonochrome:
             useGrayOverlay = True
