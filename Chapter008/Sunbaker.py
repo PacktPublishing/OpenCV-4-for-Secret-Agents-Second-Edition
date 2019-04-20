@@ -290,6 +290,13 @@ def main():
     else:
         isCaptureMonochrome = False
         capture = cv2.VideoCapture(0)
+
+        # 320x240 @ 187 FPS
+        #capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        #capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        #capture.set(cv2.CAP_PROP_FPS, 187)
+
+        # 640x480 @ 60 FPS
         capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
         capture.set(cv2.CAP_PROP_FPS, 60)
