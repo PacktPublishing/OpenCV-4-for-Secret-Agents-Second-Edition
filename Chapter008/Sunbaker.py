@@ -292,6 +292,7 @@ def main():
         capture = cv2.VideoCapture(0)
         capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        capture.set(cv2.CAP_PROP_FPS, 60)
 
     # Show motion at edges with grayscale contrast.
     sunbaker = Sunbaker(capture, isCaptureMonochrome)
