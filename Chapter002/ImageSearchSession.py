@@ -82,7 +82,8 @@ class ImageSearchSession(object):
             self._results = searchService.search(numResultsRequested, 'json')
         except Exception as e:
             sys.stderr.write(
-                    'Error when requesting Bing image search for "%s":\n' % query)
+                    'Error when requesting Bing image search for '
+                    '"%s":\n' % query)
             sys.stderr.write('%s\n' % str(e))
             self._offset = 0
             self._numResultsReceived = 0
@@ -96,7 +97,8 @@ class ImageSearchSession(object):
         self._numResultsAvailable = int(json[u'totalEstimatedMatches'])
 
         if self.verbose:
-            print('Received results of Bing image search for "%s":' % query)
+            print('Received results of Bing image search for '
+                  '"%s":' % query)
             pprint.pprint(json)
 
     def getCvImageAndUrl(self, index, useThumbnail = False):
