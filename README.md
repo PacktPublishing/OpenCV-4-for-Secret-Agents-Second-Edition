@@ -1,12 +1,58 @@
-# *OpenCV 4 for Secret Agents Second Edition*
+# OpenCV 4 for Secret Agents - Second Edition
 
-This repository contains sample projects to accompany the book *OpenCV 4 for Secret Agents Second Edition*, written by Joseph Howse (Nummist Media Corporation Limited) and published by Packt Publishing.
+<a href="https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 "><img src="https://dz13w8afd47il.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/Cover_B11226.png" alt="OpenCV 4 for Secret Agents - Second Edition" height="256px" align="right"></a>
 
----
+This is the code repository for [OpenCV 4 for Secret Agents - Second Edition](https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 ), published by Packt.
 
-*&#9758; **I am using OpenCV 4** throughout the book and this repository. Even in OpenCV 4, the name `cv2` is still used for OpenCV's Python module. Here, `cv2` does not refer to the version number; it refers to the Python wrapper around OpenCV's newer C++ API as opposed to the older C API.*
+**Use OpenCV 4 in secret projects to classify cats, reveal the unseen, and react to rogue drivers**
 
----
+## What is this book about?
+OpenCV 4 is a grand collection of image processing functions and computer vision algorithms. It is open source, it supports many programming languages and platforms, and it is fast enough for many real-time applications. What a lot of gadgets we can build with such a handy library! OpenCV 4 for Secret Agents is a broad selection of projects based on computer vision, machine learning, and several application frameworks. To target diverse desktop systems and Raspberry Pi, the book supports multiple Python versions (from 2.7 to 3.7). To target Android, the book supports Java in Android Studio, as well as C# in the Unity game engine.
+
+This book covers the following exciting features:
+* Detect motion and recognize gestures to control a smartphone game 
+* Detect car headlights and estimate distances to them 
+* Detect and recognize human and cat faces to trigger an alarm 
+* Amplify motion in real-time video to show heartbeats and breaths 
+* Make a physics simulation that detects shapes in a real-world drawing 
+* Build OpenCV 4 projects in Python 3 for desktops and Raspberry Pi 
+* Build OpenCV 4 Android applications in Android Studio and Unity 
+
+If you feel this book is for you, get your [copy](https://www.amazon.com/dp/1789345367) today!
+
+<a href="https://www.packtpub.com/?utm_source=github&utm_medium=banner&utm_campaign=GitHubBanner"><img src="https://raw.githubusercontent.com/PacktPublishing/GitHub/master/GitHub.png" 
+alt="https://www.packtpub.com/" border="5" /></a>
+
+## Instructions and Navigations
+All of the code is organized into folders. For example, Chapter02.
+
+The code will look like the following:
+```
+set PYINSTALLER=pyinstaller
+
+REM Remove any previous build of the app.
+rmdir build /s /q
+rmdir dist /s /q
+
+REM Train the classifier.
+python HistogramClassifier.py
+```
+
+**Following is what you need for this book:**
+If you are an experienced software developer who is new to computer vision or machine learning, and wants to study these topics through creative projects, then this book is for you. The book will also help existing OpenCV users who want upgrade their projects to OpenCV 4 and new versions of other libraries, languages, tools, and operating systems. General familiarity with object-oriented programming, application development, and usage of operating systems (OS), developer tools, and the command line is required.	
+
+With the following software and hardware list you can run all code files present in the book (Chapter 1-8).
+### Software and Hardware List
+| Chapter| Software required                                                                                                                 | OS required                       |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| 2      | OpenCV or 4.x*, Python 2.7 or 3.x, NumPy, SciPy, Requests, WxPython, PyInstaller (optional)                                       | Windows, Mac OS X, and Linux (Any |
+| 3      | OpenCV or 4.x* (plus optional cascade training tools from OpenCV 3.4), Python 2.7 or 3.x, NumPy, WxPython, PyInstaller (optional) | Windows, Mac OS X, and Linux (Any)|
+| 4      | Android Studio, OpenCV 4.x* for Android | Windows, Mac OS X, and Linux (Any)                                                      | Windows, Mac OS X, and Linux (Any)|
+| 5      | OpenCV 4.x*, Python 2.7 or 3.x, NumPy, WxPython | Windows, Mac OS X, and Linux (Any)                                              | Windows, Mac OS X, and Linux (Any)|
+| 6      | Unity, OpenCV 4.x* for Unity  | Windows, Mac OS X, and Linux (Any)                                                                | Windows, Mac OS X, and Linux (Any)|
+| 7      | OpenCV 4.x*, Python 2.7 or 3.x, NumPy, SciPy, WxPython, PyFFTW | Windows, Mac OS X, and Linux (Any)                               | Windows, Mac OS X, and Linux (Any)|
+| 8      | OpenCV 4.x*, Python 2.7 or 3.x, NumPy, SciPy, WxPython, PyFFTW, Spinnaker SDK (optional) plus PySpin (optional)                   | Windows, Mac OS X, and Linux (Any)|
+
 
 ## External Datasets and Tools to Train Haar and LBP Cascades
 
@@ -16,3 +62,33 @@ The cascade training script at `Chapter003/cascade_training/train.bat` (for Wind
 
 * Icons by Tatyana Suhodolska (www.artdesigncat.com)
 * Images from various sources, to train and test classifiers
+
+We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://www.packtpub.com/sites/default/files/downloads/9781789345360_ColorImages.pdf).
+
+### Related products
+* Learn OpenCV 4 By Building Projects - Second Edition [[Packt]](https://www.packtpub.com/application-development/learn-opencv-4-building-projects-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789341225 ) [[Amazon]](https://www.amazon.com/dp/1789341221)
+
+* Mastering OpenCV 4 - Third Edition [[Packt]](https://www.packtpub.com/application-development/mastering-opencv-4-third-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789533576 ) [[Amazon]](https://www.amazon.com/dp/1789533570)
+
+
+## Get to Know the Author
+**Joseph Howse**
+lives in a Canadian fishing village with four cats; the cats like fish, but they prefer chicken.
+Joseph provides computer vision expertise through his company, Nummist Media. His books include OpenCV 4 for Secret Agents, OpenCV 3 Blueprints, Android Application Programming with OpenCV 3, iOS Application Development with OpenCV 3, Learning OpenCV 3 Computer Vision with Python, and Python Game Programming by Example, published by Packt.
+
+
+## Other books by the authors
+[OpenCV Computer Vision with Python](https://www.packtpub.com/application-development/opencv-computer-vision-python?utm_source=github&utm_medium=repository&utm_campaign=9781782163923 )
+
+[Android Application Programming with OpenCV](https://www.packtpub.com/application-development/android-application-programming-opencv?utm_source=github&utm_medium=repository&utm_campaign=9781849695206 )
+
+[OpenCV for Secret Agents](https://www.packtpub.com/application-development/opencv-secret-agents?utm_source=github&utm_medium=repository&utm_campaign=9781783287376 )
+
+[Android Application Programming with OpenCV 3](https://www.packtpub.com/application-development/android-application-programming-opencv-3?utm_source=github&utm_medium=repository&utm_campaign=9781785285387 )
+
+[Python Game Programming By Example](https://www.packtpub.com/game-development/python-game-programming-example?utm_source=github&utm_medium=repository&utm_campaign=9781785281532 )
+
+### Suggestions and Feedback
+[Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
+
+
