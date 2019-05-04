@@ -63,7 +63,6 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 ## Related products
 
 * Learn OpenCV 4 By Building Projects - Second Edition [[Packt]](https://www.packtpub.com/application-development/learn-opencv-4-building-projects-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789341225 ) [[Amazon]](https://www.amazon.com/dp/1789341221)
-
 * Mastering OpenCV 4 - Third Edition [[Packt]](https://www.packtpub.com/application-development/mastering-opencv-4-third-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789533576 ) [[Amazon]](https://www.amazon.com/dp/1789533570)
 
 ## Get to know the author
@@ -74,15 +73,19 @@ Joseph provides computer vision expertise through his company, [Nummist Media](h
 
 ## Other books by the author
 
-[OpenCV Computer Vision with Python](https://www.packtpub.com/application-development/opencv-computer-vision-python?utm_source=github&utm_medium=repository&utm_campaign=9781782163923)
+Joseph Howse is the author or co-author of the following books on **OpenCV 3**:
 
-[Android Application Programming with OpenCV](https://www.packtpub.com/application-development/android-application-programming-opencv?utm_source=github&utm_medium=repository&utm_campaign=9781849695206)
+* [Learning OpenCV 3 Computer Vision with Python](https://www.packtpub.com/application-development/learning-opencv-3-computer-vision-python-second-edition)
+* [Android Application Programming with OpenCV 3](https://www.packtpub.com/application-development/android-application-programming-opencv-3?utm_source=github&utm_medium=repository&utm_campaign=9781785285387)
+* [iOS Application Development with OpenCV 3](https://www.packtpub.com/application-development/ios-application-development-opencv)
+* [OpenCV 3 Blueprints](https://www.packtpub.com/application-development/opencv-3-blueprints)
 
-[OpenCV for Secret Agents](https://www.packtpub.com/application-development/opencv-secret-agents?utm_source=github&utm_medium=repository&utm_campaign=9781783287376)
+He is also the author or co-author of the following books on **OpenCV 2**:
 
-[Android Application Programming with OpenCV 3](https://www.packtpub.com/application-development/android-application-programming-opencv-3?utm_source=github&utm_medium=repository&utm_campaign=9781785285387)
-
-[Python Game Programming By Example](https://www.packtpub.com/game-development/python-game-programming-example?utm_source=github&utm_medium=repository&utm_campaign=9781785281532)
+* [OpenCV Computer Vision with Python](https://www.packtpub.com/application-development/opencv-computer-vision-python?utm_source=github&utm_medium=repository&utm_campaign=9781782163923)
+* [Android Application Programming with OpenCV](https://www.packtpub.com/application-development/android-application-programming-opencv?utm_source=github&utm_medium=repository&utm_campaign=9781849695206)
+* [OpenCV for Secret Agents](https://www.packtpub.com/application-development/opencv-secret-agents?utm_source=github&utm_medium=repository&utm_campaign=9781783287376)
+* [Python Game Programming By Example](https://www.packtpub.com/game-development/python-game-programming-example?utm_source=github&utm_medium=repository&utm_campaign=9781785281532)
 
 ### Suggestions and Feedback
 
