@@ -87,6 +87,6 @@ He is also the author or co-author of the following **books on OpenCV 2**:
 * [OpenCV for Secret Agents](https://www.packtpub.com/application-development/opencv-secret-agents?utm_source=github&utm_medium=repository&utm_campaign=9781783287376)
 * [Python Game Programming By Example](https://www.packtpub.com/game-development/python-game-programming-example?utm_source=github&utm_medium=repository&utm_campaign=9781785281532)
 
-### Suggestions and Feedback
+## Suggestions and Feedback
 
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
