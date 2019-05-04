@@ -73,14 +73,14 @@ Joseph provides computer vision expertise through his company, [Nummist Media](h
 
 ## Other books by the author
 
-Joseph Howse is the author or co-author of the following books on **OpenCV 3**:
+Joseph Howse is the author or co-author of the following **books on OpenCV 3**:
 
 * [Learning OpenCV 3 Computer Vision with Python](https://www.packtpub.com/application-development/learning-opencv-3-computer-vision-python-second-edition)
 * [Android Application Programming with OpenCV 3](https://www.packtpub.com/application-development/android-application-programming-opencv-3?utm_source=github&utm_medium=repository&utm_campaign=9781785285387)
 * [iOS Application Development with OpenCV 3](https://www.packtpub.com/application-development/ios-application-development-opencv)
 * [OpenCV 3 Blueprints](https://www.packtpub.com/application-development/opencv-3-blueprints)
 
-He is also the author or co-author of the following books on **OpenCV 2**:
+He is also the author or co-author of the following **books on OpenCV 2**:
 
 * [OpenCV Computer Vision with Python](https://www.packtpub.com/application-development/opencv-computer-vision-python?utm_source=github&utm_medium=repository&utm_campaign=9781782163923)
 * [Android Application Programming with OpenCV](https://www.packtpub.com/application-development/android-application-programming-opencv?utm_source=github&utm_medium=repository&utm_campaign=9781849695206)
