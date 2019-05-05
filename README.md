@@ -49,7 +49,11 @@ The code is organized into folders, such as `Chapter002`, each corresponding to 
 
 ### External datasets and tools to train Haar and LBP cascades
 
-The cascade training script at `Chapter003/cascade_training/train.bat` (for Windows) or `Chapter003/cascade_training/train.sh` (for Mac or Linux) depends on datasets and tools that are not part of this repository or of OpenCV 4. Soon, this README will be updated with details about obtaining these datasets and tools.
+The cascade training script at `Chapter003/cascade_training/train.bat` (for Windows) or `Chapter003/cascade_training/train.sh` (for Mac or Linux) depends on tools that are not part of OpenCV 4, and on datasets that are not part of this repository.
+
+This repository contains cascade training tools under the `OpenCVTools` folder. Find the subfolder that matches your operating system and architecture. For example, `OpenCVTools/Windows/x64` contains cascade training tools for 64-bit Windows. Append the appropriate folder's absolute path to your system's `Path` variable (for Windows) or `PATH` variable (for Mac or Linux) so that our script can find the tools.
+
+Soon, this README will be updated with details about obtaining the datasets.
 
 ### Third-party content in this repository
 
