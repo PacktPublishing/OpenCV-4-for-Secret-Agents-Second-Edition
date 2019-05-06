@@ -1,6 +1,6 @@
 # OpenCV 4 for Secret Agents - Second Edition
 
-<a href="https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 "><img src="https://dz13w8afd47il.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/Cover_B11226.png" alt="OpenCV 4 for Secret Agents - Second Edition" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 "><img src="https://d1ldz4te4covpm.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/9781788998086cover.png" alt="OpenCV 4 for Secret Agents - Second Edition" height="256px" align="right"></a>
 
 This is the code repository for [OpenCV 4 for Secret Agents - Second Edition](https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 ), published by Packt.
 
