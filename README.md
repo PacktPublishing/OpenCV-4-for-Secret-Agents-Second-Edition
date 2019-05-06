@@ -59,7 +59,7 @@ OpenCV 3 contains tools for training Haar and LBP cascades. These tools are comm
 * For Linux, install OpenCV 3 with your system's package manager. The tools will be installed to `/usr/bin` or `/usr/local/bin`, which should already be in the system's `PATH` variable.
 * For any system, build OpenCV 3 from source, find the tools among the built binary files, and add their folder to the system's `Path` variable (on Windows) or `PATH` variable (on Mac or Linux).
 
-Soon, this README will be updated with details about obtaining the datasets.
+To train a Haar or LBP cascade to detect cat faces, we rely on third-party datasets that contain sample images of cats and other subjects. Soon, this README will be updated with details about obtaining the datasets.
 
 ### Third-party content in this repository
 
