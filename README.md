@@ -1,6 +1,6 @@
 # OpenCV 4 for Secret Agents - Second Edition
 
-<a href="https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 "><img src="https://dz13w8afd47il.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/Cover_B11226.png" alt="OpenCV 4 for Secret Agents - Second Edition" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 "><img src="https://d1ldz4te4covpm.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/9781788998086cover.png" alt="OpenCV 4 for Secret Agents - Second Edition" height="256px" align="right"></a>
 
 This is the code repository for [OpenCV 4 for Secret Agents - Second Edition](https://www.packtpub.com/application-development/opencv-4-secret-agents-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789345360 ), published by Packt.
 
@@ -49,7 +49,17 @@ The code is organized into folders, such as `Chapter002`, each corresponding to 
 
 ### External datasets and tools to train Haar and LBP cascades
 
-The cascade training script at `Chapter003/cascade_training/train.bat` (for Windows) or `Chapter003/cascade_training/train.sh` (for Mac or Linux) depends on datasets and tools that are not part of this repository or of OpenCV 4. Soon, this README will be updated with details about obtaining these datasets and tools.
+The cascade-training script at `Chapter003/cascade_training/train.bat` (for Windows) or `Chapter003/cascade_training/train.sh` (for Mac or Linux) depends on tools that are not yet part of OpenCV 4, and on datasets that are not part of this repository.
+
+OpenCV 3 contains tools for training Haar and LBP cascades. These tools are command-line executables called `opencv_createsamples.exe` and `opencv_traincascades.exe` (on Windows), or `opencv_createsamples` and `opencv_traincascades` (on Mac or Linux). The source code for these tools has not yet been updated to become part of OpenCV 4. Fortunately, though, the OpenCV 3 tools produce cascades that are forward-compatible with OpenCV 4. For the timebeing, the recommended way to train cascades for OpenCV 4 is to use the tools from an OpenCV 3 build. These tools can be obtained in any of the following ways:
+
+* For Windows, find the tools in this repository under the `OpenCVTools/Windows/x64` folder (for 64-bit Windows) or `OpenCVTools/Windows/x86` (for 32-bit Windows). Append the relevant folder's absolute path to the system's `Path` variable so that our cascade-training script can find the tools.
+* For Mac, install OpenCV 3 with MacPorts. The tools will be installed to `/opt/local/bin`, which should already be in the system's `PATH` variable.
+* For Mac, install OpenCV 3 with Homebrew. The tools will be installed to `/opt/local/bin` or `opt/local/sbin`, which should already be in the system's `PATH` variable.
+* For Linux, install OpenCV 3 with your system's package manager. The tools will be installed to `/usr/bin` or `/usr/local/bin`, which should already be in the system's `PATH` variable.
+* For any system, build OpenCV 3 from source, find the tools among the built binary files, and add their folder to the system's `Path` variable (on Windows) or `PATH` variable (on Mac or Linux).
+
+To train a Haar or LBP cascade to detect cat faces, we rely on third-party datasets that contain sample images of cats and other subjects. Soon, this README will be updated with details about obtaining the datasets.
 
 ### Third-party content in this repository
 
