@@ -49,9 +49,14 @@ The code is organized into folders, such as `Chapter002`, each corresponding to 
 
 ### External datasets and tools to train Haar and LBP cascades
 
-The cascade-training script at `Chapter003/cascade_training/train.bat` (for Windows) or `Chapter003/cascade_training/train.sh` (for Mac or Linux) depends on tools that are not yet part of OpenCV 4, and on datasets that are not part of this repository.
+The data-description script at `Chapter003/cascade_training/describe.py` depends on datasets that are not part of this repository. Moreeover, the cascade-training script at `Chapter003/cascade_training/train.bat` (for Windows) or `Chapter003/cascade_training/train.sh` (for Mac or Linux) depends on tools that are not yet part of OpenCV 4.
 
-OpenCV 3 contains tools for training Haar and LBP cascades. These tools are command-line executables called `opencv_createsamples.exe` and `opencv_traincascades.exe` (on Windows), or `opencv_createsamples` and `opencv_traincascades` (on Mac or Linux). The source code for these tools has not yet been updated to become part of OpenCV 4. Fortunately, though, the OpenCV 3 tools produce cascades that are forward-compatible with OpenCV 4. For the timebeing, the recommended way to train cascades for OpenCV 4 is to use the tools from an OpenCV 3 build. These tools can be obtained in any of the following ways:
+Several third-party datasets provide us with sample images of cats and other subjects. We use them as positive and negative training sets for a cat-face detector. The datasets are large downloads. They can be obtained in any of the following ways:
+
+* For Windows, instructions are coming soon.
+* On Mac or Linux, go to the `Chapter003/cascade_training` directory and run `download_datasets.sh`. (This script must be run from `Chapter003/cascade_training` as the working directory.) It downloads the datasets and extracts all the datasets into subfolders where `describe.py` expects to find them.
+
+OpenCV 3 contains tools for training Haar and LBP cascades. These tools are command-line executables named `opencv_createsamples.exe` and `opencv_traincascades.exe` (on Windows), or `opencv_createsamples` and `opencv_traincascades` (on Mac or Linux). The source code for these tools has not yet (as of OpenCV 4.1.0) been updated to become part of OpenCV 4. Fortunately, though, the OpenCV 3 tools produce cascades that are forward-compatible with OpenCV 4. For the timebeing, the recommended way to train cascades for OpenCV 4 is to use the tools from an OpenCV 3 build. These tools can be obtained in any of the following ways:
 
 * For Windows, find the tools in this repository under the `OpenCVTools/Windows/x64` folder (for 64-bit Windows) or `OpenCVTools/Windows/x86` (for 32-bit Windows). Append the relevant folder's absolute path to the system's `Path` variable so that our cascade-training script can find the tools.
 * For Mac, install OpenCV 3 with MacPorts. The tools will be installed to `/opt/local/bin`, which should already be in the system's `PATH` variable.
@@ -59,7 +64,7 @@ OpenCV 3 contains tools for training Haar and LBP cascades. These tools are comm
 * For Linux, install OpenCV 3 with your system's package manager. The tools will be installed to `/usr/bin` or `/usr/local/bin`, which should already be in the system's `PATH` variable.
 * For any system, build OpenCV 3 from source, find the tools among the built binary files, and add their folder to the system's `Path` variable (on Windows) or `PATH` variable (on Mac or Linux).
 
-To train a Haar or LBP cascade to detect cat faces, we rely on third-party datasets that contain sample images of cats and other subjects. Soon, this README will be updated with details about obtaining the datasets.
+
 
 ### Third-party content in this repository
 
