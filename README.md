@@ -53,18 +53,21 @@ The data-description script at `Chapter003/cascade_training/describe.py` depends
 
 Several third-party datasets provide us with sample images of cats and other subjects. We use them as positive and negative training sets for a cat-face detector. The datasets are large downloads. They can be obtained in any of the following ways:
 
-* For Windows, instructions are coming soon.
-* On Mac or Linux, go to the `Chapter003/cascade_training` directory and run `download_datasets.sh`. (This script must be run from `Chapter003/cascade_training` as the working directory.) It downloads the datasets and extracts all the datasets into subfolders where `describe.py` expects to find them.
+* On Windows, download and unzip the datasets manually, as described in the following steps:
+  1. Download `https://archive.org/download/CAT_DATASET/CAT_DATASET_01.zip`. Unzip it as `Chapter003\cascade_training\CAT_DATASET_01`.
+  2. Download `https://archive.org/download/CAT_DATASET/CAT_DATASET_01.zip`. Unzip it as `Chapter003\cascade_training\CAT_DATASET_02`.
+  3. Download `http://www.vision.caltech.edu/Image_Datasets/faces/faces.tar`. Unzip it as `Chapter003\cascade_training\faces`.
+  4. Download `http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar`. Unzip it. From the unzipped contents, move the `VOC2007` folder so that it becomes `Chapter003\cascade_training\VOC2007`.
+  5. Download `https://github.com/sonots/tutorial-haartraining/archive/master.zip`. Unzip it. From the unzipped contents, move the `data\negatives` folder so that it becomes `Chapter003\cascade_training\urtho_negatives`.
+* On Mac or Linux, go to the `Chapter003/cascade_training` directory and run `download_datasets.sh`. This script depends on `wget` and `svn` (which you can install from a package manager, if you do not already have them), and it must be run from `Chapter003/cascade_training` as the working directory. It downloads the datasets and extracts all the datasets into subfolders where `describe.py` expects to find them.
 
 OpenCV 3 contains tools for training Haar and LBP cascades. These tools are command-line executables named `opencv_createsamples.exe` and `opencv_traincascades.exe` (on Windows), or `opencv_createsamples` and `opencv_traincascades` (on Mac or Linux). The source code for these tools has not yet (as of OpenCV 4.1.0) been updated to become part of OpenCV 4. Fortunately, though, the OpenCV 3 tools produce cascades that are forward-compatible with OpenCV 4. For the timebeing, the recommended way to train cascades for OpenCV 4 is to use the tools from an OpenCV 3 build. These tools can be obtained in any of the following ways:
 
-* For Windows, find the tools in this repository under the `OpenCVTools/Windows/x64` folder (for 64-bit Windows) or `OpenCVTools/Windows/x86` (for 32-bit Windows). Append the relevant folder's absolute path to the system's `Path` variable so that our cascade-training script can find the tools.
+* For Windows, find the tools in this repository under the `OpenCVTools\Windows/x64` folder (for 64-bit Windows) or `OpenCVTools/Windows\x86` (for 32-bit Windows). Append the relevant folder's absolute path to the system's `Path` variable so that our cascade-training script can find the tools.
 * For Mac, install OpenCV 3 with MacPorts. The tools will be installed to `/opt/local/bin`, which should already be in the system's `PATH` variable.
 * For Mac, install OpenCV 3 with Homebrew. The tools will be installed to `/opt/local/bin` or `opt/local/sbin`, which should already be in the system's `PATH` variable.
 * For Linux, install OpenCV 3 with your system's package manager. The tools will be installed to `/usr/bin` or `/usr/local/bin`, which should already be in the system's `PATH` variable.
 * For any system, build OpenCV 3 from source, find the tools among the built binary files, and add their folder to the system's `Path` variable (on Windows) or `PATH` variable (on Mac or Linux).
-
-
 
 ### Third-party content in this repository
 
