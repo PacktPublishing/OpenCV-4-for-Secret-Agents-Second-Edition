@@ -57,7 +57,7 @@ Several third-party datasets provide us with sample images of cats and other sub
   1. Download `https://archive.org/download/CAT_DATASET/CAT_DATASET_01.zip`. Unzip it as `Chapter003\cascade_training\CAT_DATASET_01`.
   2. Download `https://archive.org/download/CAT_DATASET/CAT_DATASET_01.zip`. Unzip it as `Chapter003\cascade_training\CAT_DATASET_02`.
   3. Download `http://www.vision.caltech.edu/Image_Datasets/faces/faces.tar`. Unzip it as `Chapter003\cascade_training\faces`.
-  4. Download `http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar`. Unzip it. From the unzipped contents, move the `VOC2007` folder so that it becomes `Chapter003\cascade_training\VOC2007`.
+  4. Download `http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar`. Unzip it. From the unzipped contents, move the `VOC2007` folder so that it becomes `Chapter003\cascade_training\VOC2007`.
   5. Download `https://github.com/sonots/tutorial-haartraining/archive/master.zip`. Unzip it. From the unzipped contents, move the `data\negatives` folder so that it becomes `Chapter003\cascade_training\urtho_negatives`.
 * On Mac or Linux, go to the `Chapter003/cascade_training` directory and run `download_datasets.sh`. This script depends on the `wget` and `svn` command line tools (which you can install from a package manager, if you do not already have them), and it must be run from `Chapter003/cascade_training` as the working directory. It downloads the datasets and extracts all the datasets into subfolders where `describe.py` expects to find them.
 
